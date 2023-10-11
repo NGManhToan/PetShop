@@ -1,0 +1,86 @@
+﻿@model PetShop.Models.Login.LoginModel    
+@{
+        ViewBag.Title = "Login";
+        Layout = null;
+    }
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Animated Responsive Login & Register Form Using Bootstrap 5</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="~/css/stylelogin.css" rel="stylesheet" />
+    </head>
+    <body>
+
+        <div class="container">
+            <div class="col-md-4 col-md-offset-3 col-xs-12">
+                <!-- login box Code -->
+                <div class="blmd-wrapp">
+                <div class="blmd-continer">
+                    <!-- Login form container Code -->
+                    <form method="post" asp-action="Login" class="clearfix" id="login-form">
+                        <!-- Your form fields here -->
+                        <h1>Sign In</h1>
+                        <div class="col-md-12">
+                            <div class="input-group blmd-form">
+                                <div class="blmd-line">
+                                    <input type="text" name="Email" autocomplete="off" id="Email" class="form-control">
+                                    <label class="blmd-label">Email</label>
+                                </div>
+                                <p id="email-error-message" style="color: red; text-align: center; display: none;">Vui lòng điền email của bạn.</p>
+                            </div>
+                            <div class="input-group blmd-form">
+                                <div class="blmd-line">
+                                    <input type="password" name="Password" autocomplete="off" id="Password" class="form-control">
+                                    <label class="blmd-label">Password</label>
+                                </div>
+                                <p id="password-error-message" style="color: red; text-align: center; display: none;">Vui lòng điền mật khẩu của bạn.</p>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="rememberPassword" name="RememberPassword">
+                                <label class="form-check-label" for="rememberPassword">Remember Password</label>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="col-md-12 text-center">
+                            <button type="submit" class="btn btn-blmd ripple-effect btn-success btn-lg btn-block">Login</button>
+                        </div>
+                        <br />
+                    </form>
+                    <div class="col-md-12 text-center">
+                        <p>Don't have an account? <a href="@Url.Action("Register","Register")" id="switch-to-register-link">Sign up</a></p>
+                    </div>
+
+                    <!-- Login form Code -->
+                    <style>
+                        /* Add any custom styles here */
+                        .blmd-form {
+                            margin-bottom: 15px; /* Adjust this value to your preference */
+                            margin-left: 5px; /* Adjust this value to your preference */
+                        }
+                    </style>
+                    @if (!string.IsNullOrEmpty(TempData["ErrorMessage"] as string))
+                    {
+                        <div id="errorAlert" class="alert alert-danger" role="alert">
+                            @TempData["ErrorMessage"]
+                        </div>
+                    }
+
+                    
+                </div>
+                    
+                </div>
+            </div>
+        </div>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
+        <script src="~/js/script.js"></script>
+         <script>
+    // Hide alert messages after 5 seconds (5000 milliseconds)
+        setTimeout(function () {
+            document.getElementById('errorAlert').style.display = 'none';
+    }, 5000); // Adjust the time as needed (in milliseconds)
+    </script>
+    </body>
+    </html>

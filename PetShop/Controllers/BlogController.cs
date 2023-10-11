@@ -1,0 +1,28 @@
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace PetShop.Controllers
+{
+    public class BlogController : Controller
+    {
+        public IActionResult BlogGrid()
+        {
+            return View();
+        }
+        public IActionResult PrcingPlan()
+        {
+            return View();
+        }
+        public IActionResult Team()
+        {
+            return View();
+        }
+        public IActionResult DetailPage()
+        {
+            return View();
+        }
+        public IActionResult Testimonial()
+        {
+            return View();
+        }
+    }
+}

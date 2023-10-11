@@ -1,0 +1,320 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<main>
+    <!-- Hero Start -->
+    <div class="container-fluid bg-primary py-5 mb-5 hero-header">
+        <div class="container py-5">
+            <div class="row justify-content-start">
+                <div class="col-lg-8 text-center text-lg-start">
+                    <h1 class="display-1 text-uppercase text-dark mb-lg-4">Your Pet's Paradise</h1>
+                    <h1 class="text-uppercase text-white mb-lg-4">Spoil Your Furry Friends with the Best</h1>
+                    <p class="fs-4 text-white mb-lg-4">Explore our range of premium pet products to keep your furry companions happy and healthy. From toys to treats, we have everything they need.</p>
+                    <div class="d-flex align-items-center justify-content-center justify-content-lg-start pt-5">
+                        <a href="#" class="btn btn-outline-light border-2 py-md-3 px-md-5 me-5">Discover More</a>
+                        <button type="button" class="btn-play" data-bs-toggle="modal"
+                                data-src="https://www.youtube.com/embed/c_VDcCP1XvM" data-bs-target="#videoModal">
+                            <span></span>
+                        </button>
+                        <h5 class="font-weight-normal text-white m-0 ms-4 d-none d-sm-block">Watch Video</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero End -->
+    <!-- Video Modal Start -->
+    <div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content rounded-0">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Youtube Video</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- 16:9 aspect ratio -->
+                    <div class="ratio ratio-16x9">
+                        <iframe class="embed-responsive-item" src="" id="video" allowfullscreen allowscriptaccess="always"
+                                allow="autoplay"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Video Modal End -->
+    <!-- About Start -->
+    <div class="container-fluid py-5">
+        <div class="container">
+            <div class="row gx-5">
+                <div class="col-lg-5 mb-5 mb-lg-0" style="min-height: 500px;">
+                    <div class="position-relative h-100">
+                        <img class="position-absolute w-100 h-100 rounded" src="~/img/about.jpg" style="object-fit: cover;">
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <div class="border-start border-5 border-primary ps-5 mb-5">
+                        <h6 class="text-primary text-uppercase">Welcome to Our Pet Shop</h6>
+                        <h1 class="display-5 text-uppercase mb-0">We Care for Your Pets Like Family</h1>
+                    </div>
+                    <style>
+                        .text-justify {
+                            text-align: justify;
+                        }
+                    </style>
+                    <!-- Thay đổi mô tả của pet shop -->
+                    <h4 class="text-body mb-4 text-justify">Explore a world of happiness and well-being for your pets at our pet shop. Our dedicated team is committed to providing top-notch services and a wide range of quality products to ensure the happiness and health of your beloved pets.</h4>
+                    <div class="bg-light p-4">
+                        <ul class="nav nav-pills justify-content-between mb-3" id="pills-tab" role="tablist">
+                            <li class="nav-item w-50" role="presentation">
+                                <button class="nav-link text-uppercase w-100 active" id="pills-1-tab" data-bs-toggle="pill"
+                                        data-bs-target="#pills-1" type="button" role="tab" aria-controls="pills-1"
+                                        aria-selected="true">
+                                    Our Mission
+                                </button>
+                            </li>
+                            <li class="nav-item w-50" role="presentation">
+                                <button class="nav-link text-uppercase w-100" id="pills-2-tab" data-bs-toggle="pill"
+                                        data-bs-target="#pills-2" type="button" role="tab" aria-controls="pills-2"
+                                        aria-selected="false">
+                                    Our Vision
+                                </button>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="pills-tabContent">
+                            <div class="tab-pane fade show active" id="pills-1" role="tabpanel" aria-labelledby="pills-1-tab">
+                                <!-- Thay đổi mô tả về sứ mệnh của pet shop -->
+                                <p class="mb-0">At our pet shop, we are dedicated to providing personalized care and high-quality products to enhance the well-being of your pets. Our mission is to create a joyful and healthy environment where your pets thrive and flourish.</p>
+                            </div>
+                            <div class="tab-pane fade" id="pills-2" role="tabpanel" aria-labelledby="pills-2-tab">
+                                <!-- Thay đổi mô tả về tầm nhìn của pet shop -->
+                                <p class="mb-0">We envision a future where every pet experiences love, care, and a fulfilling life. Our commitment is to be a leading pet care provider, shaping the future of pet well-being through innovation, compassion, and lasting connections with our community.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- About End -->
+    <!-- Services Start -->
+    <div class="container-fluid py-5">
+        <div class="container">
+            <div class="border-start border-5 border-primary ps-5 mb-5" style="max-width: 600px;">
+                <h6 class="text-primary text-uppercase">Services</h6>
+                <h1 class="display-5 text-uppercase mb-0">Our Excellent Pet Care Services</h1>
+            </div>
+            <div class="row g-5">
+                <div class="col-md-6">
+                    <div class="service-item bg-light d-flex p-4">
+                        <i class="flaticon-house display-1 text-primary me-4"></i>
+                        <div>
+                            <h5 class="text-uppercase mb-3">Pet Boarding</h5>
+                            <p>We provide a safe and comfortable environment for your pets when you're away.</p>
+                            <a class="text-primary text-uppercase" href="#">Learn More<i class="bi bi-chevron-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="service-item bg-light d-flex p-4">
+                        <i class="flaticon-food display-1 text-primary me-4"></i>
+                        <div>
+                            <h5 class="text-uppercase mb-3">Pet Feeding</h5>
+                            <p>We ensure your pets get the right nutrition they need every day.</p>
+                            <a class="text-primary text-uppercase" href="">Read More<i class="bi bi-chevron-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="service-item bg-light d-flex p-4">
+                        <i class="flaticon-grooming display-1 text-primary me-4"></i>
+                        <div>
+                            <h5 class="text-uppercase mb-3">Pet Grooming</h5>
+                            <p>Our professional groomers will make sure your pets always look their best.</p>
+                            <a class="text-primary text-uppercase" href="">Read More<i class="bi bi-chevron-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="service-item bg-light d-flex p-4">
+                        <i class="flaticon-cat display-1 text-primary me-4"></i>
+                        <div>
+                            <h5 class="text-uppercase mb-3">Pet Training</h5>
+                            <p>Our experienced trainers use positive reinforcement techniques to help your pets learn new behaviors.</p>
+                            <a class="text-primary text-uppercase" href="">Read More<i class="bi bi-chevron-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="service-item bg-light d-flex p-4">
+                        <i class="flaticon-dog display-1 text-primary me-4"></i>
+                        <div>
+                            <h5 class="text-uppercase mb-3">Pet Exercise</h5>
+                            <p>We offer a variety of fun and engaging activities to keep your pets active and healthy.</p>
+                            <a class="text-primary text-uppercase" href="">Read More<i class="bi bi-chevron-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="service-item bg-light d-flex p-4">
+                        <i class="flaticon-vaccine display-1 text-primary me-4"></i>
+                        <div>
+                            <h5 class="text-uppercase mb-3">Pet Treatment</h5>
+                            <p>Our veterinary services cover everything from routine check-ups to emergency treatments.</p>
+                            <a class="text-primary text-uppercase" href="">Read More<i class="bi bi-chevron-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Services End -->
+    <!-- Products Start -->
+    <div class="container-fluid py-5">
+        <div class="container">
+            <div class="border-start border-5 border-primary ps-5 mb-5" style="max-width: 600px;">
+                <h6 class="text-primary text-uppercase">Products</h6>
+                <h1 class="display-5 text-uppercase mb-0">Products For Your Best Friends</h1>
+            </div>
+            <div class="owl-carousel product-carousel">
+                <div class="pb-5">
+                    <div class="product-item position-relative bg-light d-flex flex-column text-center">
+                        <img class="img-fluid mb-4" src="~/img/product-1.png" alt="">
+                        <h6 class="text-uppercase">Quality Pet Foods</h6>
+                        <h5 class="text-primary mb-0">$199.00</h5>
+                        <div class="btn-action d-flex justify-content-center">
+                            <a class="btn btn-primary py-2 px-3" href=""><i class="bi bi-cart"></i></a>
+                            <a class="btn btn-primary py-2 px-3" href=""><i class="bi bi-eye"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="pb-5">
+                    <div class="product-item position-relative bg-light d-flex flex-column text-center">
+                        <img class="img-fluid mb-4" src="~/img/product-2.png" alt="">
+                        <h6 class="text-uppercase">Quality Pet Foods</h6>
+                        <h5 class="text-primary mb-0">$199.00</h5>
+                        <div class="btn-action d-flex justify-content-center">
+                            <a class="btn btn-primary py-2 px-3" href=""><i class="bi bi-cart"></i></a>
+                            <a class="btn btn-primary py-2 px-3" href=""><i class="bi bi-eye"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="pb-5">
+                    <div class="product-item position-relative bg-light d-flex flex-column text-center">
+                        <img class="img-fluid mb-4" src="~/img/product-3.png" alt="">
+                        <h6 class="text-uppercase">Quality Pet Foods</h6>
+                        <h5 class="text-primary mb-0">$199.00</h5>
+                        <div class="btn-action d-flex justify-content-center">
+                            <a class="btn btn-primary py-2 px-3" href=""><i class="bi bi-cart"></i></a>
+                            <a class="btn btn-primary py-2 px-3" href=""><i class="bi bi-eye"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="pb-5">
+                    <div class="product-item position-relative bg-light d-flex flex-column text-center">
+                        <img class="img-fluid mb-4" src="~/img/product-4.png" alt="">
+                        <h6 class="text-uppercase">Quality Pet Foods</h6>
+                        <h5 class="text-primary mb-0">$199.00</h5>
+                        <div class="btn-action d-flex justify-content-center">
+                            <a class="btn btn-primary py-2 px-3" href=""><i class="bi bi-cart"></i></a>
+                            <a class="btn btn-primary py-2 px-3" href=""><i class="bi bi-eye"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="pb-5">
+                    <div class="product-item position-relative bg-light d-flex flex-column text-center">
+                        <img class="img-fluid mb-4" src="~/img/product-2.png" alt="">
+                        <h6 class="text-uppercase">Quality Pet Foods</h6>
+                        <h5 class="text-primary mb-0">$199.00</h5>
+                        <div class="btn-action d-flex justify-content-center">
+                            <a class="btn btn-primary py-2 px-3" href=""><i class="bi bi-cart"></i></a>
+                            <a class="btn btn-primary py-2 px-3" href=""><i class="bi bi-eye"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Products End -->
+    <!-- Offer Start -->
+    <div class="container-fluid bg-offer my-5 py-5">
+        <div class="container py-5">
+            <div class="row gx-5 justify-content-start">
+                <div class="col-lg-7">
+                    <div class="border-start border-5 border-dark ps-5 mb-5">
+                        <h6 class="text-dark text-uppercase">Exclusive Offer</h6>
+                        <h1 class="display-5 text-uppercase text-white mb-0">Unlock 50% Off on Your First Purchase</h1>
+                    </div>
+                    <p class="text-white mb-4">Discover the joy of pampering your pets with our exclusive offer. Enjoy a 50% discount on all items in your first order. Hurry, this special deal won't last forever!</p>
+                    <a href="#" class="btn btn-light py-md-3 px-md-5 me-3">Shop Now</a>
+                    <a href="#" class="btn btn-outline-light py-md-3 px-md-5">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Offer End -->
+
+
+    @{ Html.RenderPartial("~/Views/Blog/PrcingPlan.cshtml");}
+    @{ Html.RenderPartial("~/Views/Blog/Team.cshtml");}
+    @{ Html.RenderPartial("~/Views/Blog/Testimonial.cshtml");}
+
+    <!-- Blog Start -->
+    <!-- Pet Shop Blog Section -->
+    <div class="container-fluid py-5">
+        <div class="container">
+            <div class="border-start border-5 border-primary ps-5 mb-5" style="max-width: 600px;">
+                <h6 class="text-primary text-uppercase">Explore Our Pet Blog</h6>
+                <h1 class="display-5 text-uppercase mb-0">Discover the Latest Updates from Our Pet Shop</h1>
+            </div>
+            <div class="row g-5">
+                <div class="col-lg-6">
+                    <div class="blog-item">
+                        <div class="row g-0 bg-light overflow-hidden">
+                            <div class="col-12 col-sm-5 h-100">
+                                <img class="img-fluid h-100" src="~/img/blog-1.jpg" style="object-fit: cover;">
+                            </div>
+                            <div class="col-12 col-sm-7 h-100 d-flex flex-column justify-content-center">
+                                <div class="p-4">
+                                    <div class="d-flex mb-3">
+                                        <small class="me-3"><i class="bi bi-paw me-2"></i>Pet Care Tips</small>
+                                        <small><i class="bi bi-calendar-date me-2"></i>01 Jan, 2023</small>
+                                    </div>
+                                    <h5 class="text-uppercase mb-3">Choosing the Right Toys for Your Furry Friend</h5>
+                                    <p>Learn about the best toys that will keep your pet happy and engaged. Find the perfect playtime companions.</p>
+                                    <a class="text-primary text-uppercase" href="@Url.Action("BlogGrid","Blog")">Read More<i class="bi bi-chevron-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="blog-item">
+                        <div class="row g-0 bg-light overflow-hidden">
+                            <div class="col-12 col-sm-5 h-100">
+                                <img class="img-fluid h-100" src="~/img/blog-2.jpg" style="object-fit: cover;">
+                            </div>
+                            <div class="col-12 col-sm-7 h-100 d-flex flex-column justify-content-center">
+                                <div class="p-4">
+                                    <div class="d-flex mb-3">
+                                        <small class="me-3"><i class="bi bi-paw me-2"></i>Pet Health</small>
+                                        <small><i class="bi bi-calendar-date me-2"></i>01 Jan, 2023</small>
+                                    </div>
+                                    <h5 class="text-uppercase mb-3">Maintaining Your Pet's Wellness Routine</h5>
+                                    <p>Explore essential tips to ensure your pet stays healthy and happy. Discover the importance of regular check-ups and vaccinations.</p>
+                                    <a class="text-primary text-uppercase" href="@Url.Action("BlogGrid","Blog")">Read More<i class="bi bi-chevron-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Blog End -->
+
+</main>
