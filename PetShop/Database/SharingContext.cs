@@ -524,9 +524,13 @@ namespace PetShop.Database
 
                 entity.Property(e => e.FirstName).HasMaxLength(20);
 
-                entity.Property(e => e.IsActive).HasColumnType("bit(1)");
+                entity.Property(e => e.IsActive)
+                    .HasColumnType("bit(1)")
+                    .HasDefaultValueSql("b'1'");
 
-                entity.Property(e => e.IsDeleted).HasColumnType("bit(1)");
+                entity.Property(e => e.IsDeleted)
+                    .HasColumnType("bit(1)")
+                    .HasDefaultValueSql("b'0'");
 
                 entity.Property(e => e.LastModifiedDate)
                     .HasColumnType("datetime")

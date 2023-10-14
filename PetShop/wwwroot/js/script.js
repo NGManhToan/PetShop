@@ -1,10 +1,10 @@
 ﻿(function ($) {
-    
+
     // Ripple-effect animation Code
     $(".ripple-effect").click(function (e) {
         var rippler = $(this);
 
-      	rippler.append("<span class='ink'></span>");
+        rippler.append("<span class='ink'></span>");
 
         var ink = rippler.find(".ink:last-child");
         // prevent quick double clicks Code
@@ -26,18 +26,18 @@
             top: y + 'px',
             left: x + 'px'
         }).addClass("animate");
-        setTimeout(function(){
-        	ink.remove();
-        },1000)
+        setTimeout(function () {
+            ink.remove();
+        }, 1000)
     })
 
-// Ripple effect animation Code
-   function fullRipper(color,time){
-       setTimeout(function(){
+    // Ripple effect animation Code
+    function fullRipper(color, time) {
+        setTimeout(function () {
             var rippler = $(".ripple-effect-All");
-            if(rippler.find(".ink-All").length == 0){
+            if (rippler.find(".ink-All").length == 0) {
                 rippler.append("<span class='ink-All'></span>");
-                
+
 
                 var ink = rippler.find(".ink-All");
 
@@ -50,18 +50,18 @@
                 }
 
                 // get click coordinates Code
-                var x =0;
-                var y =rippler.offset().top - ink.height()/1.5;
+                var x = 0;
+                var y = rippler.offset().top - ink.height() / 1.5;
 
                 ink.css({
                     top: y + 'px',
                     left: x + 'px',
-                    background:color
+                    background: color
                 }).addClass("animate");
 
-                rippler.css('z-index',2);
+                rippler.css('z-index', 2);
 
-                setTimeout(function(){
+                setTimeout(function () {
                     ink.css({
                         '-webkit-transform': 'scale(2.5)',
                         '-moz-transform': 'scale(2.5)',
@@ -69,21 +69,21 @@
                         '-o-transform': 'scale(2.5)',
                         'transform': 'scale(2.5)'
                     })
-                    rippler.css('z-index',0);
-                },1500);
+                    rippler.css('z-index', 0);
+                }, 1500);
             }
-       },time)
-        
+        }, time)
+
     }
 
     // Form border-bottom line Code
-    $('.blmd-line .form-control').bind('focus',function(){
+    $('.blmd-line .form-control').bind('focus', function () {
         $(this).parent('.blmd-line').addClass('blmd-toggled').removeClass("hf");
-    }).bind('blur',function(){
-        var val=$(this).val();
-        if(val){
+    }).bind('blur', function () {
+        var val = $(this).val();
+        if (val) {
             $(this).parent('.blmd-line').addClass("hf");
-        }else{
+        } else {
             $(this).parent('.blmd-line').removeClass('blmd-toggled');
         }
     })
@@ -112,12 +112,17 @@
         });
 
         // Function to validate the register form
+        
+    });
+
+    $(document).ready(function () {
+        // Function to validate the login form
         $("#Register-form").submit(function (event) {
-            var firstname = $("#firstname").val();
-            var lastname = $("#lastname").val();
-            var username = $("#username").val();
-            var password = $("#password").val();
-            var rePassword = $("#rePassword").val();
+            var email = $("#email").val().trim();
+            var repeatPassword = $("#repeatPassword").val().trim();
+            var firstname = $("#firstname").val().trim();
+            var lastname = $("#lastname").val().trim();
+            var password = $("#password").val().trim();
 
             // Check if any field is empty
             if (!firstname) {
@@ -126,37 +131,33 @@
             } else {
                 $("#firstname-error-message").hide();
             }
-
             if (!lastname) {
                 $("#lastname-error-message").text("Vui lòng điền họ của bạn.").show();
                 event.preventDefault();
             } else {
                 $("#lastname-error-message").hide();
             }
-
-            if (!username) {
-                $("#username-error-message").text("Vui lòng điền email của bạn.").show();
+            if (!email) {
+                $("#email-error-message").text("Vui lòng điền email của bạn.").show();
                 event.preventDefault();
             } else {
-                $("#username-error-message").hide();
+                $("#email-error-message").hide();
             }
-
-            if (!password || password.trim() === "") {
+            if (!password) {
                 $("#password-error-message1").text("Vui lòng điền mật khẩu của bạn.").show();
                 event.preventDefault();
             } else {
                 $("#password-error-message1").hide();
             }
-
-
-            if (!rePassword) {
-                $("#rePassword-error-message").text("Vui lòng nhập lại mật khẩu của bạn.").show();
+            if (!repeatPassword) {
+                $("#repeatPassword-error-message").text("Vui lòng nhập lại mật khẩu của bạn.").show();
                 event.preventDefault();
             } else {
-                $("#rePassword-error-message").hide();
+                $("#repeatPassword-error-message").hide();
             }
         });
-    });
 
+
+    });
 
 })(jQuery);

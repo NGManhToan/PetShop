@@ -1,9 +1,12 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+using PetShop.Action;
+using PetShop.Action.Interface;
 using PetShop.Database;
 using PetShop.Query;
 using PetShop.Query.Interface;
 using PetShop.Service;
+using PetShop.Service.Interface;
 using PetShop.UtilsService;
 using PetShop.UtilsService.Interface;
 using WebApiTutorialHE.Service.Interface;
@@ -14,6 +17,8 @@ var configuration = builder.Configuration;
 builder.Services.AddSingleton<ISharingDapper, SharingDapper>();
 builder.Services.AddScoped<ILoginQuery, LoginQuery>();
 builder.Services.AddScoped<ILoginService, LoginService>();
+builder.Services.AddScoped<IRegisterAction,RegisterAction>();
+builder.Services.AddScoped<IRegisterAccountService, RegisterAccountService>();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
