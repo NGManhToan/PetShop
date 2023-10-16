@@ -1,0 +1,52 @@
+﻿@model PetShop.Models.PageList.PagedListModel<PetShop.Models.Product.ListProductModel>
+
+@{
+    ViewBag.Title = "Product";
+}
+
+<!-- Products Start -->
+<div class="container-fluid py-5">
+    <div class="container">
+        <div class="border-start border-5 border-primary ps-5 mb-5" style="max-width: 600px;">
+            <h6 class="text-primary text-uppercase">Products</h6>
+            <h1 class="display-5 text-uppercase mb-0">Products For Your Best Friends</h1>
+        </div>
+        <div class="row">
+            @if (Model.Items != null && Model.Items.Any())
+            {
+                foreach (var product in Model.Items)
+                {
+                    <div class="col-lg-2 col-md-4 pb-5">
+                        <div class="product-item position-relative bg-light d-flex flex-column text-center">
+                            <img class="img-fluid mb-4" src="@product.ProductImgae" alt="">
+                            <h6 class="text-uppercase">@product.ProductName</h6>
+                            <h5 class="text-primary mb-0">$@string.Format("{0:N2}", product.ProductPrice)</h5>
+
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div>Không có sản phẩm nào.</div>
+            }
+        </div>
+
+        <!-- Pagination Start -->
+        <div class="d-flex justify-content-center mt-4">
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    @for (var i = 1; i <= Model.TotalPages; i++)
+                    {
+                        <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+                            <a class="page-link" href="@Url.Action("ListProduct", new { pageNumber = i, pageSize = 20 })">@i</a>
+                        </li>
+                    }
+                </ul>
+            </nav>
+        </div>
+        <!-- Pagination End -->
+
+    </div>
+</div>
+<!-- Products End -->

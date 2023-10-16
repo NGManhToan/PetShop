@@ -19,6 +19,8 @@ builder.Services.AddScoped<ILoginQuery, LoginQuery>();
 builder.Services.AddScoped<ILoginService, LoginService>();
 builder.Services.AddScoped<IRegisterAction,RegisterAction>();
 builder.Services.AddScoped<IRegisterAccountService, RegisterAccountService>();
+builder.Services.AddScoped<IProductQuery, ProductQuery>();
+builder.Services.AddScoped<IProductService, ProductService>();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
