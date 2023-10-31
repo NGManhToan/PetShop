@@ -113,10 +113,10 @@ window.onload = function () {
         <td>
             <div class="product_count">
                 <input type="text" name="qty" id="${cartItem.productId}" maxlength="12" value="${cartItem.quantity}" title="Quantity:" class="input-text qty">
-                <button onclick="updateQuantity(${cartItem.productId}, 1, ${cartItem.productPrice}, ${cartItem.productName}, ${cartItem.productImage}, increase)" class="increase items-count" type="button">
+                <button onclick="updateQuantity(${cartItem.productId}, 1, ${cartItem.productPrice}, '${cartItem.productName}', '${cartItem.productImage}' ,increase)" class="increase items-count" type="button">
                     <i class="lnr lnr-chevron-up"></i>
                 </button>
-                <button onclick="updateQuantity(${cartItem.productId}, -1, ${cartItem.productPrice}, ${cartItem.productName}, ${cartItem.productImage}, decrease)" class="reduced items-count" type="button">
+                <button onclick="updateQuantity(${cartItem.productId}, -1, ${cartItem.productPrice}, ${cartItem.productName}, ${cartItem.productImage})" class="reduced items-count" type="button">
                     <i class="lnr lnr-chevron-down"></i>
                 </button>
             </div>

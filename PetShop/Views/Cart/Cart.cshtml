@@ -68,10 +68,10 @@
                                     <td>
                                         <div class="product_count">
                                             <input type="text" name="qty" id="@product.Id" maxlength="12" value="@cartItem.Quantity" title="Quantity:" class="input-text qty">
-                                            <button onclick="updateQuantity('@product.Id', 1, @product.Price);updateGrandTotal()" class="increase items-count" type="button">
+                                            <button onclick="updateQuantity(@product.Id, 1, @product.Price);updateGrandTotal()" class="increase items-count" type="button">
                                                 <i class="lnr lnr-chevron-up"></i>
                                             </button>
-                                            <button onclick="updateQuantity('@product.Id', -1, @product.Price);updateGrandTotal()" class="reduced items-count" type="button">
+                                            <button onclick="updateQuantity(@product.Id, -1, @product.Price);updateGrandTotal()" class="reduced items-count" type="button">
                                                 <i class="lnr lnr-chevron-down"></i>
                                             </button>
                                         </div>
@@ -80,7 +80,7 @@
                                         <h5>$@total</h5>
                                     </td>
                                 </tr>
-                                
+
                             }
                         }
                     }
@@ -91,7 +91,9 @@
                         </tbody>
                     }
                     
+
                 </table>
+
                 <!-- Phần hiển thị tổng tiền -->
                 <h4 id="grand-total-display" style="text-align: right;">Grand Total:</h4>
                 <!-- Nút thanh toán -->
