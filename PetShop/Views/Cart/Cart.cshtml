@@ -36,53 +36,17 @@
                             <th scope="col">Total</th>
                         </tr>
                     </thead>
+                    
                     @if (User.Identity.IsAuthenticated)
                     {
-                        foreach (var cartItem in Model)
-                        {
-                            var product = cartItem;
-                            if (product != null)
+                        <tbody>
+                            @foreach (var cartItem in Model)
                             {
-                                var total = product.Price * cartItem.Quantity;
-                                <tr>
-                                    <td>
-                                        <div>
-                                            <input type="checkbox" id="select-@product.Id" onclick="updateGrandTotal()">
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="d-flex">
-                                            <img src="@product.Image" alt="">
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="media">
-                                            <div class="media-body">
-                                                <p>@product.Name</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <h5>@product.Price.ToString("C")</h5>
-                                    </td>
-                                    <td>
-                                        <div class="product_count">
-                                            <input type="text" name="qty" id="@product.Id" maxlength="12" value="@cartItem.Quantity" title="Quantity:" class="input-text qty">
-                                            <button onclick="updateQuantity(@product.Id, 1, @product.Price);updateGrandTotal()" class="increase items-count" type="button">
-                                                <i class="lnr lnr-chevron-up"></i>
-                                            </button>
-                                            <button onclick="updateQuantity(@product.Id, -1, @product.Price);updateGrandTotal()" class="reduced items-count" type="button">
-                                                <i class="lnr lnr-chevron-down"></i>
-                                            </button>
-                                        </div>
-                                    </td>
-                                    <td id="total-@product.Id">
-                                        <h5>$@total</h5>
-                                    </td>
-                                </tr>
+
 
                             }
-                        }
+                        </tbody>
+                        
                     }
                     else
                     {
@@ -91,9 +55,8 @@
                         </tbody>
                     }
                     
-
                 </table>
-
+                
                 <!-- Phần hiển thị tổng tiền -->
                 <h4 id="grand-total-display" style="text-align: right;">Grand Total:</h4>
                 <!-- Nút thanh toán -->
