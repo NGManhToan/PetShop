@@ -4,7 +4,7 @@ function updateGrandTotal() {
     var checkboxes = document.querySelectorAll(input[type="checkbox"]);
     for (var i = 0; i < checkboxes.length; i++) {
         if (checkboxes[i].checked) {
-            var id = checkboxes[i].id.split(-)[1];
+            var id = checkboxes[i].id.split('-')[1];
             var total = document.getElementById(total- + id).innerText;
             total = total.replace(/[^0-9.-]+/g, "");
             grandTotal += parseFloat(total);
