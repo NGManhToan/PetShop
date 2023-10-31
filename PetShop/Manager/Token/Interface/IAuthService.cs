@@ -1,5 +1,4 @@
 ﻿using System.Security.Claims;
-using System.Collections.Generic;
 
 namespace PetShop.Manager.Token.Interface
 {

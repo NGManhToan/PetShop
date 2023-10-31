@@ -15,20 +15,59 @@ namespace PetShop.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ListProduct(int pageNumber = 1, int pageSize = 20)
+        public async Task<IActionResult> ListProduct(int pageNumber = 1, int pageSize = 15)
         {
             var products = await _productService.ListProduct(pageNumber, pageSize);
+            var categoryProduct = await _productService.ListCategoryProducts();
             var totalProducts = await _productService.GetTotalProducts();
+
             var model = new PagedListModel<ListProductModel>
             {
                 CurrentPage = pageNumber,
                 TotalPages = (int)Math.Ceiling(totalProducts / (double)pageSize),
+                PageSize = pageSize,
+                TotalItems = totalProducts,
                 Items = products
             };
-            return View(model);
+
+            var viewModel = new AllListProduct
+            {
+                Products = products,
+                Categories = categoryProduct,
+                Pagination = model
+            };
+
+            return View(viewModel);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> FillterCategoryProduct(int categoryId, int pageNumber = 1, int pageSize = 15)
+        {
+            var result = await _productService.FitterListByCategoryProduct(categoryId, pageNumber, pageSize);
+
+
+            var originalModel = new AllListProduct
+            {
+                Products = result,
+                Categories = await _productService.ListCategoryProducts(),
+                Pagination = new PagedListModel<ListProductModel>
+                {
+
+                }
+            };
+
+            return View("ListProduct", originalModel);
+
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DetailItem(int productId)
+        {
+
+            var result = await _productService.DetailItem(productId);
+
+            return View("DetailItem", result);
+        }
 
     }
 }
-

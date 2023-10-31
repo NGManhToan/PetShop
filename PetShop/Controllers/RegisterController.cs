@@ -20,7 +20,7 @@ namespace PetShop.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult>Register(RegisterAccountModel registerAccountModel)
+        public async Task<IActionResult> Register(RegisterAccountModel registerAccountModel)
         {
             var register = await _registerAccountService.RegisterAccount(registerAccountModel);
             if (register == null)

@@ -17,12 +17,21 @@ var configuration = builder.Configuration;
 builder.Services.AddSingleton<ISharingDapper, SharingDapper>();
 builder.Services.AddScoped<ILoginQuery, LoginQuery>();
 builder.Services.AddScoped<ILoginService, LoginService>();
-builder.Services.AddScoped<IRegisterAction,RegisterAction>();
+builder.Services.AddScoped<IRegisterAction, RegisterAction>();
 builder.Services.AddScoped<IRegisterAccountService, RegisterAccountService>();
 builder.Services.AddScoped<IProductQuery, ProductQuery>();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IPetService, PetService>();
+builder.Services.AddScoped<IPetQuery, PetQuery>();
+builder.Services.AddScoped<ICartService, CartService>();
+builder.Services.AddScoped<ICartQuery, CartQuery>();
+builder.Services.AddScoped<ICartAction, CartAction>();
 // Add services to the container.
+
+
+builder.Services.AddSession();
 builder.Services.AddControllersWithViews();
+builder.Services.AddHttpContextAccessor();
 
 
 builder.Services.AddDbContext<SharingContext>(options => options.UseMySql(configuration.GetConnectionString("SharingConnection"),
@@ -53,6 +62,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseSession();
 
 app.UseAuthentication();
 app.UseAuthorization();

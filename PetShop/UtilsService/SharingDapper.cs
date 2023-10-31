@@ -1,8 +1,8 @@
-﻿using MySqlConnector;
-using System.Data.Common;
-using System.Data;
-using Dapper;
+﻿using Dapper;
+using MySqlConnector;
 using PetShop.UtilsService.Interface;
+using System.Data;
+using System.Data.Common;
 
 namespace PetShop.UtilsService
 {

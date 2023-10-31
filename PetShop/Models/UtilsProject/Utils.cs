@@ -1,14 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
-using PetShop.Manager.Token;
+﻿using PetShop.Manager.Token;
 using PetShop.Manager.Token.Interface;
-using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 
 namespace PetShop.Models.UtilsProject
@@ -47,7 +42,7 @@ namespace PetShop.Models.UtilsProject
         public static ulong GetRoleFromToken(HttpRequest request)
         {
             var headers = request.Headers;
-            
+
 
             if (headers.ContainsKey("Authorization") || headers.ContainsKey("AuthorizationSwagger"))
             {
@@ -62,7 +57,7 @@ namespace PetShop.Models.UtilsProject
                 if (!String.IsNullOrEmpty(token) && token.Contains("Bearer "))
                 {
                     token = token.Replace("Bearer ", "");
-                    if (Signature.CheckTokenValid(token) )
+                    if (Signature.CheckTokenValid(token))
                     {
                         IAuthService authService = new JWTService(KeyToken);
                         List<Claim> claims = authService.GetTokenClaims(token).ToList();
@@ -77,7 +72,7 @@ namespace PetShop.Models.UtilsProject
                         ////return Convert.ToInt32(claims.FirstOrDefault(e => e.Type.Equals(ClaimTypes.Role)).Value);
                     }
                 }
-                
+
             }
 
 
@@ -138,7 +133,7 @@ namespace PetShop.Models.UtilsProject
 
 
 
-        
+
 
 
     }

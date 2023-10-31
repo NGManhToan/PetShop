@@ -1,5 +1,4 @@
 ﻿using PetShop.Models.Login;
-using PetShop.Models.UtilsProject;
 
 namespace WebApiTutorialHE.Service.Interface
 {

@@ -5,6 +5,6 @@ namespace PetShop.Action.Interface
 {
     public interface IRegisterAction
     {
-         Task<TblUser> Register(RegisterAccountModel account);
+        Task<TblUser> Register(RegisterAccountModel account);
     }
 }

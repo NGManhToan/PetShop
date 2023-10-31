@@ -1,0 +1,107 @@
+﻿@model List<PetShop.Models.Cart.CartViewModel>
+@{
+    ViewBag.Title = "Cart";
+}
+<!-- Start Banner Area -->
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Shopping Cart</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="category.html">Cart</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="~/js/javascript1.js"></script>
+
+<!-- End Banner Area -->
+<!--================Cart Area =================-->
+<section class="cart_area">
+    <div class="container">
+        <div class="cart_inner">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Select</th>
+                            <th scope="col">Image</th>
+                            <th scope="col">Product</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Total</th>
+                        </tr>
+                    </thead>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        foreach (var cartItem in Model)
+                        {
+                            var product = cartItem;
+                            if (product != null)
+                            {
+                                var total = product.Price * cartItem.Quantity;
+                                <tr>
+                                    <td>
+                                        <div>
+                                            <input type="checkbox" id="select-@product.Id" onclick="updateGrandTotal()">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex">
+                                            <img src="@product.Image" alt="">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="media">
+                                            <div class="media-body">
+                                                <p>@product.Name</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <h5>@product.Price.ToString("C")</h5>
+                                    </td>
+                                    @*adsas*@
+                                    <td>
+                                        <div class="product_count">
+                                            <input type="text" name="qty" id="@product.Id" maxlength="12" value="@cartItem.Quantity" title="Quantity:" class="input-text qty">
+                                            <button onclick="updateQuantity('@product.Id', 1, @product.Price);updateGrandTotal()" class="increase items-count" type="button">
+                                                <i class="lnr lnr-chevron-up"></i>
+                                            </button>
+                                            <button onclick="updateQuantity('@product.Id', -1, @product.Price);updateGrandTotal()" class="reduced items-count" type="button">
+                                                <i class="lnr lnr-chevron-down"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                    <td id="total-@product.Id">
+                                        <h5>$@total</h5>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    }
+                    else
+                    {
+                        <tbody id="cartItemsDisplay">
+                            <!-- This is where the cart items will be dynamically added -->
+                        </tbody>
+                    }
+                    
+                </table>
+                <!-- Phần hiển thị tổng tiền -->
+                <h4 id="grand-total-display" style="text-align: right;">Grand Total:</h4>
+                <!-- Nút thanh toán -->
+                <a class="primary-btn" style="float: right;" href="#">Proceed to checkout</a>
+                <style>
+                    .checkout_btn_inner {
+                        justify-content: flex-end;
+                    }
+                </style>
+            </div>
+        </div>
+    </div>
+</section>

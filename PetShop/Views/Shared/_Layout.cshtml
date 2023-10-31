@@ -1,380 +1,231 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="zxx" class="no-js">
 
 <head>
-    <meta charset="utf-8">
-    <title>PET SHOP</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="Free HTML Templates" name="keywords">
-    <meta content="Free HTML Templates" name="description">
+	<!-- Mobile Specific Meta -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- Favicon-->
+	<link rel="shortcut icon" href="img/fav.png">
+	<!-- Author Meta -->
+	<meta name="author" content="CodePixar">
+	<!-- Meta Description -->
+	<meta name="description" content="">
+	<!-- Meta Keyword -->
+	<meta name="keywords" content="">
+	<!-- meta character set -->
+	<meta charset="UTF-8">
+	<!-- Site Title -->
+	<title>Karma Shop</title>
 
-    <!-- Favicon -->
-    <link href="~/img/favicon.ico" rel="icon">
-
-    <!-- Google Web Fonts -->
-
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Mr+De+Haviland&family=Roboto:wght@400;500;700&display=swap"
-          rel="stylesheet">
-
-    <!-- Icon Font Stylesheet -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-    <link href="~/lib/flaticon/font/flaticon.css" rel="stylesheet" />
-
-    <!-- Libraries Stylesheet -->
-    <link href="~/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet" />
-
-    <!-- Customized Bootstrap Stylesheet -->
-    <link href="~/css/bootstrap.min.css" rel="stylesheet" />
-
-
-    <!-- Template Stylesheet -->
-    <link href="~/css/style.css" rel="stylesheet">
-    <link href="~/css/style1.css" rel="stylesheet" />
-
+	<!--
+		CSS
+		============================================= -->
+	<link rel="stylesheet" href="~/css/linearicons.css">
+	<link rel="stylesheet" href="~/css/font-awesome.min.css">
+	<link rel="stylesheet" href="~/css/themify-icons.css">
+	<link rel="stylesheet" href="~/css/bootstrap.css">
+	<link rel="stylesheet" href="~/css/owl.carousel.css">
+	<link rel="stylesheet" href="~/css/nice-select.css">
+	<link rel="stylesheet" href="~/css/nouislider.min.css">
+	<link rel="stylesheet" href="~/css/ion.rangeSlider.css" />
+	<link rel="stylesheet" href="~/css/ion.rangeSlider.skinFlat.css" />
+	<link rel="stylesheet" href="~/css/magnific-popup.css">
+    <link rel="stylesheet" href="~/css/main.css">
+    <link href="~/css/bootstrapone.min.css" rel="stylesheet" />
+    <link href="~/css/style.css" rel="stylesheet" />
 </head>
+
+
 <body>
 
-    <!--
-      - #HEADER
-    -->
-
-    <header class="header" data-header>
-        <div class="container">
-
-            <div class="input-wrapper">
-                <input type="search" name="search" placeholder="Search Anything..." class="input-field">
-
-                <ion-icon name="search-outline" aria-hidden="true"></ion-icon>
-            </div>
-
-            <a href="@Url.Action("Index", "Home")" class="logo">Woodex</a>
-
-            <div class="header-action">
-                @if (User.Identity.IsAuthenticated)
-                {
-                    <!-- User is logged in -->
-                    <span>Welcome, @User.Identity.Name!</span>
-                    <a href="@Url.Action("Logout", "Login")">Logout</a>
-                }
-                else
-                {
-                    <!-- User is not logged in -->
-                    <a href="@Url.Action("Login", "Login")" class="social-link">
-                        <button class="header-action-btn" aria-label="user">
-                            <div style="display: flex; align-items: center;">
-                                <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
-                                <span style="font-size: 15px; margin-left: 8px;">Đăng nhập</span>
-                            </div>
-                        </button>
-                    </a>
-                }
-
-                <button class="header-action-btn" aria-label="favorite list">
-                    <ion-icon name="heart-outline" aria-hidden="true"></ion-icon>
-
-                    <span class="btn-badge">0</span>
-                </button>
-
-                <button class="header-action-btn" aria-label="cart">
-                    <ion-icon name="bag-handle-outline" aria-hidden="true"></ion-icon>
-
-                    <span class="btn-badge">0</span>
-                </button>
-
-                <button class="header-action-btn" aria-label="open menu" data-nav-toggler>
-                    <ion-icon name="menu-outline" aria-hidden="true"></ion-icon>
-                </button>
-
-            </div>
-
-        </div>
-    </header>
-
-
-
-
-
-    <!--
-      - #SIDEBAR
-    -->
-
-    <div class="sidebar" data-navbar>
-
-        <button class="nav-close-btn" aria-label="close menu" data-nav-toggler>
-            <ion-icon name="close-outline" aria-hidden="true"></ion-icon>
-        </button>
-
-        
-
-        <nav class="navbar">
-            <ul class="navbar-list">
-                <br />
-                <li class="navbar-item">
-                    <a href="@Url.Action("Index", "Home")" class="navbar-link" data-nav-link>Home</a>
-                </li>
-
-                <li class="navbar-item">
-                    <a href="about.html" class="navbar-link" data-nav-link>About</a>
-                </li>
-
-                <li class="navbar-item">
-                    <a href="@Url.Action("ListProduct","Product")" class="navbar-link" data-nav-link>Product</a>
-                </li>
-                <li class="navbar-item">
-                    <a href="#service.html" class="navbar-link" data-nav-link>Service</a>
-                </li>
-
-                <li class="navbar-item">
-                    <a href="@Url.Action("Contact", "Contact")" class="navbar-link" data-nav-link>Contact</a>
-                </li>
-
-                <li class="nav-item me-3 me-lg-0 d-none d-sm-inline-block dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" id="new-mdb-technologies-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                        Blog
-                    </a>
-
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="new-mdb-technologies-dropdown"
-                        style="left: 50px;width:fit-content;border: white;">
-                        <li><a class="dropdown-item" href="@Url.Action("PricingPlan", "Blog")">Pricing Plan</a></li>
-                       
-                        <li><a class="dropdown-item" href="@Url.Action("Team", "Blog")">The Team</a></li>
-
-                        <li><a class="dropdown-item" href="@Url.Action("Testimonial", "Blog")">Testimonial</a></li>
-
-                        <li><a class="dropdown-item" href="@Url.Action("BlogGrid", "Blog")">Blog Grid</a></li>
-
-                        <li><a class="dropdown-item" href="@Url.Action("DetailPage", "Blog")">Blog Detail</a></li>
-                    </ul>
-                </li>
-
-
-                
-            </ul>
-        </nav>
-        <style>
-            .nav-link{
-                padding: inherit;
-                color: #000;
-            }
-
-            .dropdown-item{
-                font-size: initial;
-            }
-
-            .nav-link:hover, .nav-link:focus{
-                color: #000;
-            }
-            a:hover{
-                color: #000;
-            }
-
-            .dropdown-item{
-                box-shadow: var(--mdb-dropdown-box-shadow) !important;
-                --mdb-dropdown-box-shadow:0 2px 15px -3px rgba(0,0,0,0.07), 0 10px 20px -2px rgba(0,0,0,0.04);
-            }
-
-        </style>
-
-        <div class="social-wrapper">
-
-            <p class="social-list-title">Follow US On Socials</p>
-
-            <ul class="social-list">
-
-                <li>
-                    <a href="#" class="social-link">
-                        <ion-icon name="logo-facebook"></ion-icon>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="#" class="social-link">
-                        <ion-icon name="logo-twitter"></ion-icon>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="#" class="social-link">
-                        <ion-icon name="logo-tumblr"></ion-icon>
-                    </a>
-                </li>
-
-            </ul>
-
-        </div>
-
-    </div>
-
-    <div class="overlay" data-overlay data-nav-toggler></div>
-    @RenderBody()
-
-    <!--
-      - #FOOTER
-    -->
-
-    <footer class="footer">
-        <div class="container">
-
-            <div class="footer-top section">
-
-                <div class="footer-brand">
-
-                    <a href="#" class="logo">Woodex</a>
-
-                    <ul>
-
-                        <li class="footer-list-item">
-                            <ion-icon name="location-sharp" aria-hidden="true"></ion-icon>
-
-                            <address class="address">
-                                Woodex, Chicago, USA 2022
-                            </address>
-                        </li>
-
-                        <li class="footer-list-item">
-                            <ion-icon name="call-sharp" aria-hidden="true"></ion-icon>
-
-                            <a href="tel:+1234567890" class="footer-link">+1234567890</a>
-                        </li>
-
-                        <li>
-                            <ul class="social-list">
-
-                                <li>
-                                    <a href="#" class="social-link">
-                                        <ion-icon name="logo-facebook"></ion-icon>
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="#" class="social-link">
-                                        <ion-icon name="logo-twitter"></ion-icon>
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="#" class="social-link">
-                                        <ion-icon name="logo-tumblr"></ion-icon>
-                                    </a>
-                                </li>
-
-                            </ul>
-                        </li>
-
-                    </ul>
-
-                </div>
-
-                <ul class="footer-list">
-
-                    <li>
-                        <p class="footer-list-title">Help & Information</p>
-                    </li>
-
-                    <li>
-                        <a href="#" class="footer-link">Help & Contact Us</a>
-                    </li>
-
-                    <li>
-                        <a href="#" class="footer-link">Returns & Refunds</a>
-                    </li>
-
-                    <li>
-                        <a href="#" class="footer-link">Online Stores</a>
-                    </li>
-
-                    <li>
-                        <a href="#" class="footer-link">Terms & Conditions</a>
-                    </li>
-
-                </ul>
-
-                <ul class="footer-list">
-
-                    <li>
-                        <p class="footer-list-title">About Us</p>
-                    </li>
-
-                    <li>
-                        <a href="#" class="footer-link">About Us</a>
-                    </li>
-
-                    <li>
-                        <a href="#" class="footer-link">What We Do</a>
-                    </li>
-
-                    <li>
-                        <a href="#" class="footer-link">FAQ Page</a>
-                    </li>
-
-                    <li>
-                        <a href="#" class="footer-link">Contact Us</a>
-                    </li>
-
-                </ul>
-
-                <div class="footer-list">
-
-                    <p class="footer-list-title">Newsletter</p>
-
-                    <form action="" class="footer-form">
-                        <input type="email" name="email_address" placeholder="Your email address" required class="email-field">
-
-                        <button type="submit" class="footer-form-btn">
-                            <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
-                        </button>
-                    </form>
-
-                    <div class="wrapper">
-
-                        <a href="#" class="footer-link">Term & Condition</a>
-                        <a href="#" class="footer-link">Policy</a>
-                        <a href="#" class="footer-link">Map</a>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="footer-bottom">
-
-                <p class="copyright">
-                    &copy; 2022 All Rights Reserved by <a href="#" class="copyright-link">codewithsadee</a>.
-                </p>
-
-            </div>
-
-        </div>
-    </footer>
-
-
-    <!--
-      - #BACK TO TOP
-    -->
-
-    <a href="#top" class="back-top-btn" aria-label="back to top" data-back-top-btn>
-        <ion-icon name="arrow-up" aria-hidden="true"></ion-icon>
-    </a>
-
-
-    <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/lib/easing/easing.min.js"></script>
-    <script src="~/lib/waypoints/waypoints.min.js"></script>
+	<!-- Start Header Area -->
+	<header class="header_area sticky-header">
+		<div class="main_menu">
+			<nav class="navbar navbar-expand-lg navbar-light main_box">
+				<div class="container">
+
+                    <!-- Brand and toggle get grouped for better mobile display -->
+					<a class="navbar-brand logo_h" href="@Url.Action("Index", "Home")"><img src="~/img/logo.png" alt=""></a>
+					<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+							aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+
+
+					<!-- Collect the nav links, forms, and other content for toggling -->
+					<div class="collapse navbar-collapse offset" id="navbarSupportedContent">
+						<span>Welcome, @User.Identity.Name!</span>
+						<ul class="nav navbar-nav menu_nav ml-auto">
+							
+							<li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li>
+							<li class="nav-item submenu dropdown">
+								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+								   aria-expanded="false">Shop</a>
+								<ul class="dropdown-menu">
+									<li class="nav-item"><a class="nav-link" href="@Url.Action("ListProduct","Product")">Shop Product</a></li>
+									<li class="nav-item"><a class="nav-link" href="@Url.Action("ListPet","Pet")">Shop Pet</a></li>
+									<li class="nav-item"><a class="nav-link" href="checkout.html">Product Checkout</a></li>
+									<li class="nav-item"><a class="nav-link" href="cart.html">Shopping Cart</a></li>
+									<li class="nav-item"><a class="nav-link" href="confirmation.html">Confirmation</a></li>
+								</ul>
+							</li>
+							<li class="nav-item submenu dropdown">
+								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+								   aria-expanded="false">Blog</a>
+								<ul class="dropdown-menu">
+									<li class="nav-item"><a class="nav-link" href="@Url.Action("BlogGrid", "Blog")">Blog</a></li>
+									<li class="nav-item"><a class="nav-link" href="@Url.Action("DetailPage","Blog")">Blog Details</a></li>
+								</ul>
+							</li>
+							<li class="nav-item submenu dropdown">
+								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+								   aria-expanded="false">Pages</a>
+								<ul class="dropdown-menu">
+									@if (User.Identity.IsAuthenticated)
+									{
+										
+										<li class="nav-item"><a class="nav-link" href="@Url.Action("Logout", "Login")">Logout</a></li>
+									}
+									else
+									{
+										<li class="nav-item"><a class="nav-link" href="@Url.Action("Login", "Login", new { returnUrl = Context.Request.Path + Context.Request.QueryString })">Login</a></li>
+									}
+									
+									<li class="nav-item"><a class="nav-link" href="tracking.html">Tracking</a></li>
+									<li class="nav-item"><a class="nav-link" href="elements.html">Elements</a></li>
+								</ul>
+							</li>
+							<li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+						</ul>
+						<ul class="nav navbar-nav navbar-right">
+@*							Cart CartNoAccount*@
+
+							<li class="nav-item"><a href="@Url.Action("Cart","Cart")" class="cart"><span class="ti-bag"></span></a></li>
+
+							<li class="nav-item">
+								<button class="search"><span class="lnr lnr-magnifier" id="search"></span></button>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+		</div>
+		<div class="search_input" id="search_input_box">
+			<div class="container">
+				<form class="d-flex justify-content-between">
+					<input type="text" class="form-control" id="search_input" placeholder="Search Here">
+					<button type="submit" class="btn"></button>
+					<span class="lnr lnr-cross" id="close_search" title="Close Search"></span>
+				</form>
+			</div>
+		</div>
+	</header>
+	<!-- End Header Area -->
+
+
+	@RenderBody()
+	<!-- start footer Area -->
+	<footer class="footer-area section_gap">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-3  col-md-6 col-sm-6">
+					<div class="single-footer-widget">
+						<h6>About Us</h6>
+						<p>
+							Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore dolore
+							magna aliqua.
+						</p>
+					</div>
+				</div>
+				<div class="col-lg-4  col-md-6 col-sm-6">
+					<div class="single-footer-widget">
+						<h6>Newsletter</h6>
+						<p>Stay update with our latest</p>
+						<div class="" id="mc_embed_signup">
+
+							<form target="_blank" novalidate="true" action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
+								  method="get" class="form-inline">
+
+								<div class="d-flex flex-row">
+
+									<input class="form-control" name="EMAIL" placeholder="Enter Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Email '"
+										   required="" type="email">
+
+
+									<button class="click-btn btn btn-default"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></button>
+									<div style="position: absolute; left: -5000px;">
+										<input name="b_36c4fd991d266f23781ded980_aefe40901a" tabindex="-1" value="" type="text">
+									</div>
+
+									<!-- <div class="col-lg-4 col-md-4">
+												<button class="bb-btn btn"><span class="lnr lnr-arrow-right"></span></button>
+											</div>  -->
+								</div>
+								<div class="info"></div>
+							</form>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-3  col-md-6 col-sm-6">
+					<div class="single-footer-widget mail-chimp">
+						<h6 class="mb-20">Instragram Feed</h6>
+						<ul class="instafeed d-flex flex-wrap">
+							<li><img src="img/i1.jpg" alt=""></li>
+							<li><img src="img/i2.jpg" alt=""></li>
+							<li><img src="img/i3.jpg" alt=""></li>
+							<li><img src="img/i4.jpg" alt=""></li>
+							<li><img src="img/i5.jpg" alt=""></li>
+							<li><img src="img/i6.jpg" alt=""></li>
+							<li><img src="img/i7.jpg" alt=""></li>
+							<li><img src="img/i8.jpg" alt=""></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-2 col-md-6 col-sm-6">
+					<div class="single-footer-widget">
+						<h6>Follow Us</h6>
+						<p>Let us be social</p>
+						<div class="footer-social d-flex align-items-center">
+							<a href="#"><i class="fa fa-facebook"></i></a>
+							<a href="#"><i class="fa fa-twitter"></i></a>
+							<a href="#"><i class="fa fa-dribbble"></i></a>
+							<a href="#"><i class="fa fa-behance"></i></a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="footer-bottom d-flex justify-content-center align-items-center flex-wrap">
+				<p class="footer-text m-0">
+					<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+					Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+					<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+				</p>
+			</div>
+		</div>
+	</footer>
+	<!-- End footer Area -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
+			crossorigin="anonymous"></script>
+	<script src="~/js/vendor/bootstrap.min.js"></script>
+	<script src="~/js/jquery.ajaxchimp.min.js"></script>
+	<script src="~/js/jquery.nice-select.min.js"></script>
+	<script src="~/js/jquery.sticky.js"></script>
+	<script src="~/js/nouislider.min.js"></script>
+	<script src="~/js/countdown.js"></script>
+	<script src="~/js/jquery.magnific-popup.min.js"></script>
+	<!--gmaps Js-->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
     <script src="~/lib/owlcarousel/owl.carousel.min.js"></script>
-
-    <!--
-      - ionicon link
-    -->
-    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-
-    <!-- Template Javascript -->
+    <script src="~/lib/owlcarousel/owl.carousel.js"></script>
+	<script src="~/js/gmaps.min.js"></script>
     <script src="~/js/main.js"></script>
-    <script src="~/js/site.js"></script>
-    <script src="~/js/script.js"></script>
+    <script src="~/js/mainone.js"></script>
 </body>
+
 </html>

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace PetShop.Database.SharingModels
+﻿namespace PetShop.Database.SharingModels
 {
     public partial class TblPet
     {
@@ -22,6 +19,7 @@ namespace PetShop.Database.SharingModels
         public DateTime? CreatedDate { get; set; }
         public DateTime? LastModifiedDate { get; set; }
         public int? LastModifiedBy { get; set; }
+        public decimal? PetPrice { get; set; }
 
         public virtual TblPetCategory PetCategory { get; set; } = null!;
         public virtual TblVendor Vendor { get; set; } = null!;

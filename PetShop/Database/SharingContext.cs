@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
 using PetShop.Database.SharingModels;
 
 namespace PetShop.Database
@@ -27,6 +24,7 @@ namespace PetShop.Database
         public virtual DbSet<TblPet> TblPets { get; set; } = null!;
         public virtual DbSet<TblPetCategory> TblPetCategories { get; set; } = null!;
         public virtual DbSet<TblProduct> TblProducts { get; set; } = null!;
+        public virtual DbSet<TblProductCategory> TblProductCategories { get; set; } = null!;
         public virtual DbSet<TblRole> TblRoles { get; set; } = null!;
         public virtual DbSet<TblService> TblServices { get; set; } = null!;
         public virtual DbSet<TblUser> TblUsers { get; set; } = null!;
@@ -374,6 +372,10 @@ namespace PetShop.Database
                     .HasMaxLength(50)
                     .HasColumnName("pet_name");
 
+                entity.Property(e => e.PetPrice)
+                    .HasPrecision(10, 2)
+                    .HasColumnName("pet_price");
+
                 entity.Property(e => e.PetStatus).HasColumnName("pet_status");
 
                 entity.Property(e => e.VendorId).HasColumnName("vendor_id");
@@ -424,11 +426,20 @@ namespace PetShop.Database
 
                 entity.ToTable("tbl_product");
 
+                entity.HasIndex(e => e.CategoryId, "FK_Product_CategoryId");
+
                 entity.Property(e => e.ProductId).HasColumnName("product_id");
+
+                entity.Property(e => e.CategoryId).HasColumnName("category_id");
 
                 entity.Property(e => e.CreatedDate)
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.Discount)
+                    .HasPrecision(5, 2)
+                    .HasColumnName("discount")
+                    .HasDefaultValueSql("'0.00'");
 
                 entity.Property(e => e.IsActive).HasColumnType("bit(1)");
 
@@ -453,6 +464,37 @@ namespace PetShop.Database
                 entity.Property(e => e.ProductPrice)
                     .HasPrecision(10, 2)
                     .HasColumnName("product_price");
+
+                entity.HasOne(d => d.Category)
+                    .WithMany(p => p.TblProducts)
+                    .HasForeignKey(d => d.CategoryId)
+                    .HasConstraintName("FK_Product_CategoryId");
+            });
+
+            modelBuilder.Entity<TblProductCategory>(entity =>
+            {
+                entity.HasKey(e => e.CategoryId)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("tbl_product_category");
+
+                entity.Property(e => e.CategoryId).HasColumnName("category_id");
+
+                entity.Property(e => e.CategoryName)
+                    .HasMaxLength(50)
+                    .HasColumnName("category_name");
+
+                entity.Property(e => e.CreatedDate)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.IsActive).HasColumnType("bit(1)");
+
+                entity.Property(e => e.IsDeleted).HasColumnType("bit(1)");
+
+                entity.Property(e => e.LastModifiedDate)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
             });
 
             modelBuilder.Entity<TblRole>(entity =>

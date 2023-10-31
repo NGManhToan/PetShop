@@ -6,7 +6,7 @@ using PetShop.Models.UtilsProject;
 
 namespace PetShop.Action
 {
-    public class RegisterAction:IRegisterAction
+    public class RegisterAction : IRegisterAction
     {
         private readonly SharingContext _context;
         public RegisterAction(SharingContext context)
@@ -14,7 +14,7 @@ namespace PetShop.Action
             _context = context;
         }
 
-        public async Task<TblUser>Register(RegisterAccountModel account)
+        public async Task<TblUser> Register(RegisterAccountModel account)
         {
             var repeat = Encryptor.SHA256Encode(account.RepeatPassword.Trim());
 

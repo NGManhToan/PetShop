@@ -1,7 +1,6 @@
-﻿using PetShop.Models.UtilsProject;
+﻿using PetShop.Manager.Token.Interface;
+using PetShop.Models.UtilsProject;
 using System.Security.Claims;
-using PetShop.Database.SharingModels;
-using PetShop.Manager.Token.Interface;
 
 namespace PetShop.Manager.Token
 {

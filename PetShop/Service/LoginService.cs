@@ -1,12 +1,9 @@
-﻿
-using PetShop.Query;
-using WebApiTutorialHE.Service.Interface;
+﻿using PetShop.Manager.Token;
+using PetShop.Manager.Token.Interface;
+using PetShop.Models.Login;
 using PetShop.Models.UtilsProject;
 using PetShop.Query.Interface;
-using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption;
-using PetShop.Models.Login;
-using PetShop.Manager.Token.Interface;
-using PetShop.Manager.Token;
+using WebApiTutorialHE.Service.Interface;
 
 
 namespace PetShop.Service
@@ -27,7 +24,7 @@ namespace PetShop.Service
             {
                 return null;
             }
-            
+
             IAuthContainerModel model = Signature.GetJWTContainerModel(login.Id.ToString(), loginModel.Email, loginModel.Password, login.Roles.ToString());
             IAuthService authService = new JWTService(model.SecretKey);
 

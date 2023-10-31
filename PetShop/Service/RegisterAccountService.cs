@@ -5,7 +5,7 @@ using PetShop.Service.Interface;
 
 namespace PetShop.Service
 {
-    public class RegisterAccountService:IRegisterAccountService
+    public class RegisterAccountService : IRegisterAccountService
     {
         private readonly IRegisterAction _registerAction;
         public RegisterAccountService(IRegisterAction registerAction)

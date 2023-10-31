@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace PetShop.Database.SharingModels
+﻿namespace PetShop.Database.SharingModels
 {
     public partial class TblVendor
     {
