@@ -17,7 +17,7 @@
     </div>
 </section>
 
-<script src="~/js/javascript1.js"></script>
+
 
 <!-- End Banner Area -->
 <!--================Cart Area =================-->
@@ -36,153 +36,54 @@
                             <th scope="col">Total</th>
                         </tr>
                     </thead>
-                    
                     @if (User.Identity.IsAuthenticated)
                     {
-
                         <tbody>
-                            <tr>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="media">
-                                        <div class="d-flex">
-                                            <img src="img/cart.jpg" alt="">
-                                        </div>
-                                        <div class="media-body">
-                                            <p>Minimalistic shop for multipurpose use</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <h5>$360.00</h5>
-                                </td>
-                                <td>
-                                    <div class="product_count">
-                                        <input type="text" name="qty" id="sst" maxlength="12" value="1" title="Quantity:"
-                                               class="input-text qty">
-                                        <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
-                                                class="increase items-count" type="button">
-                                            <i class="lnr lnr-chevron-up"></i>
-                                        </button>
-                                        <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
-                                                class="reduced items-count" type="button">
-                                            <i class="lnr lnr-chevron-down"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                                <td>
-                                    <h5>$720.00</h5>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="media">
-                                        <div class="d-flex">
-                                            <img src="img/cart.jpg" alt="">
-                                        </div>
-                                        <div class="media-body">
-                                            <p>Minimalistic shop for multipurpose use</p>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <h5>$360.00</h5>
-                                </td>
-                                <td>
-                                    <div class="product_count">
-                                        <input type="text" name="qty" id="sst" maxlength="12" value="1" title="Quantity:"
-                                               class="input-text qty">
-                                        <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
-                                                class="increase items-count" type="button">
-                                            <i class="lnr lnr-chevron-up"></i>
-                                        </button>
-                                        <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
-                                                class="reduced items-count" type="button">
-                                            <i class="lnr lnr-chevron-down"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                                <td>
-                                    <h5>$720.00</h5>
-                                </td>
-                            </tr>
-                            <tr class="bottom_button">
-                                <td>
-                                    <a class="gray_btn" href="#">Update Cart</a>
-                                </td>
-                                <td>
-                                </td>
-                                <td>
-                                </td>
-                                <td>
-                                    <div class="cupon_text d-flex align-items-center">
-                                        <input type="text" placeholder="Coupon Code">
-                                        <a class="primary-btn" href="#">Apply</a>
-                                        <a class="gray_btn" href="#">Close Coupon</a>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                </td>
-                                <td>
-                                </td>
-                                <td>
-                                    <h5>Subtotal</h5>
-                                </td>
-                                <td>
-                                    <h5>$2160.00</h5>
-                                </td>
-                            </tr>
-                            <tr class="shipping_area">
-                                <td>
-                                </td>
-                                <td>
-                                </td>
-                                <td>
-                                    <h5>Shipping</h5>
-                                </td>
-                                <td>
-                                    <div class="shipping_box">
-                                        <ul class="list">
-                                            <li><a href="#">Flat Rate: $5.00</a></li>
-                                            <li><a href="#">Free Shipping</a></li>
-                                            <li><a href="#">Flat Rate: $10.00</a></li>
-                                            <li class="active"><a href="#">Local Delivery: $2.00</a></li>
-                                        </ul>
-                                        <h6>Calculate Shipping <i class="fa fa-caret-down" aria-hidden="true"></i></h6>
-                                        <select class="shipping_select">
-                                            <option value="1">Bangladesh</option>
-                                            <option value="2">India</option>
-                                            <option value="4">Pakistan</option>
-                                        </select>
-                                        <select class="shipping_select">
-                                            <option value="1">Select a State</option>
-                                            <option value="2">Select a State</option>
-                                            <option value="4">Select a State</option>
-                                        </select>
-                                        <input type="text" placeholder="Postcode/Zipcode">
-                                        <a class="gray_btn" href="#">Update Details</a>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr class="out_button_area">
-                                <td>
-                                </td>
-                                <td>
-                                </td>
-                                <td>
-                                </td>
-                                <td>
-                                    <div class="checkout_btn_inner d-flex align-items-center">
-                                        <a class="gray_btn" href="#">Continue Shopping</a>
-                                        <a class="primary-btn" href="#">Proceed to checkout</a>
-                                    </div>
-                                </td>
-                            </tr>
+                            @foreach (var cartItem in Model)
+                            {
+                                var product = cartItem;
+                                if (product != null)
+                                {
+                                    var total = product.Price * cartItem.Quantity;
+                                    <tr>
+                                        <td>
+                                            <div>
+                                                <input type="checkbox" id="select-@product.Id" onclick="updateGrandTotal()">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex">
+                                                <img src="@product.Image" alt="">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="media">
+                                                <div class="media-body">
+                                                    <p>@product.Name</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <h5>@product.Price.ToString("C")</h5>
+                                        </td>
+                                        <td>
+                                            <div class="product_count">
+                                                <input type="text" name="qty" id="@product.Id" maxlength="12" value="@cartItem.Quantity" title="Quantity:" class="input-text qty">
+                                                <button onclick="updateQuantity(@product.Id, 1, @product.Price);updateGrandTotal()" class="increase items-count" type="button">
+                                                    <i class="lnr lnr-chevron-up"></i>
+                                                </button>
+                                                <button onclick="updateQuantity(@product.Id, -1, @product.Price);updateGrandTotal()" class="reduced items-count" type="button">
+                                                    <i class="lnr lnr-chevron-down"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                        <td id="total-@product.Id">
+                                            <h5>@total.ToString("C")</h5>
+                                        </td>
+                                    </tr>
+                                }
+                            }
                         </tbody>
-                        
                     }
                     else
                     {
@@ -190,19 +91,80 @@
                             <!-- This is where the cart items will be dynamically added -->
                         </tbody>
                     }
+
+
+                    <!-- Additional rows for cart operations -->
+                    <tr class="bottom_button">
+                        <td>
+                            <a class="gray_btn" href="#">Continue Shopping</a>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <div class="cupon_text d-flex align-items-center">
+                                <input type="text" placeholder="Coupon Code">
+                                <a class="primary-btn" href="#">Apply</a>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr class="shipping_area">
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                            <h5>Shipping</h5>
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
                     
+                    
+
                 </table>
-                
+
+
                 <!-- Phần hiển thị tổng tiền -->
                 <h4 id="grand-total-display" style="text-align: right;">Grand Total:</h4>
                 <!-- Nút thanh toán -->
-                <a class="primary-btn" style="float: right;" href="#">Proceed to checkout</a>
+                <a class="primary-btn" id="proceed-to-checkout" style="float: right;" href="#">Proceed to checkout</a>
                 <style>
                     .checkout_btn_inner {
                         justify-content: flex-end;
                     }
                 </style>
+
+
+               
+
+
             </div>
+
+            <div>
+                <select class="form-select form-select-sm mb-3" id="city" aria-label=".form-select-sm">
+                    <option value="" selected>Chọn tỉnh thành</option>
+                </select>
+
+                <select class="" id="district" aria-label="">
+                    <option value="" selected>Chọn quận huyện</option>
+                </select>
+
+                <select class="form-select form-select-sm" id="ward" aria-label=".form-select-sm">
+                    <option value="" selected>Chọn phường xã</option>
+                </select>
+            </div>
+
+
         </div>
     </div>
 </section>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="~/js/javascript2.js"></script>
+<script src="~/js/javascript1.js"></script>
+@*<script src="~/js/app.js"></script>*@
