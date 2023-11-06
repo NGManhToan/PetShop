@@ -40,6 +40,22 @@ namespace PetShop.Controllers
             
         }
 
+
+        public async Task<IActionResult> SaveLocalStorage()
+        {
+            // Retrieve user ID from the current user's claims
+            var userId = HttpContext.Session.GetString("UserId");
+            if (userId != null)
+            {
+                // Pass the user ID to get the user-specific cart
+                var cart = await _cartService.GetListCart(int.Parse(userId));
+
+                // Pass the cart to the view
+                return View(cart);
+            }
+            return View();
+
+        }
         //[HttpPost]
         //public IActionResult SaveOrderToDatabase([FromBody] OrderModel order)
         //{
@@ -57,7 +73,7 @@ namespace PetShop.Controllers
         //        {
         //            Quantity = order.Quantity,
         //            ProductId = order.ProductId,
-                    
+
         //        };
         //        _context.TblOrders.Add(tblOrder);
         //        _context.TblOrderDetails.Add(tblOrderDetail);
