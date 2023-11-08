@@ -33,15 +33,16 @@
     <link rel="stylesheet" href="~/css/main.css">
     <link href="~/css/bootstrapone.min.css" rel="stylesheet" />
     <link href="~/css/style.css" rel="stylesheet" />
+    <link href="~/scss/theme/" rel="stylesheet" />
 </head>
 
 
 <body>
 
 	<!-- Start Header Area -->
-	<header class="header_area sticky-header">
+	<header class="header_area sticky-header" style="width:100% !important">
 		<div class="main_menu">
-			<nav class="navbar navbar-expand-lg navbar-light main_box">
+			<nav class="navbar navbar-expand-lg navbar-light main_box shadow" >
 				<div class="container">
 
                     <!-- Brand and toggle get grouped for better mobile 
@@ -102,12 +103,16 @@
 							<li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
 						</ul>
 						<ul class="nav navbar-nav navbar-right">
-@*							Cart CartNoAccount*@
-
-							<li class="nav-item"><a href="@Url.Action("Cart","Cart")" class="cart"><span class="ti-bag"></span></a></li>
-
 							<li class="nav-item">
-								<button class="search"><span class="lnr lnr-magnifier" id="search"></span></button>
+								<a href="@Url.Action("Cart", "Cart")" class="cart">
+									<span class="ti-bag"></span>
+									<span class="text">Cart</span>
+								</a>
+							</li>
+							<li class="nav-item">
+								<button class="search">
+									<span class="lnr lnr-magnifier" id="search"></span>
+								</button>
 							</li>
 						</ul>
 					</div>

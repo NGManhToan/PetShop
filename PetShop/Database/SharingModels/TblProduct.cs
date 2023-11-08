@@ -1,10 +1,12 @@
-﻿namespace PetShop.Database.SharingModels
+﻿using System;
+using System.Collections.Generic;
+
+namespace PetShop.Database.SharingModels
 {
     public partial class TblProduct
     {
         public TblProduct()
         {
-            TblCarts = new HashSet<TblCart>();
             TblOrderDetails = new HashSet<TblOrderDetail>();
         }
 
@@ -23,7 +25,6 @@
         public decimal? Discount { get; set; }
 
         public virtual TblProductCategory? Category { get; set; }
-        public virtual ICollection<TblCart> TblCarts { get; set; }
         public virtual ICollection<TblOrderDetail> TblOrderDetails { get; set; }
     }
 }

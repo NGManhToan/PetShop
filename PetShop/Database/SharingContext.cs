@@ -1,4 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using PetShop.Database.SharingModels;
 
 namespace PetShop.Database
@@ -18,6 +21,7 @@ namespace PetShop.Database
         public virtual DbSet<TblBlog> TblBlogs { get; set; } = null!;
         public virtual DbSet<TblBlogCategory> TblBlogCategories { get; set; } = null!;
         public virtual DbSet<TblCart> TblCarts { get; set; } = null!;
+        public virtual DbSet<TblCartDetail> TblCartDetails { get; set; } = null!;
         public virtual DbSet<TblCustomer> TblCustomers { get; set; } = null!;
         public virtual DbSet<TblOrder> TblOrders { get; set; } = null!;
         public virtual DbSet<TblOrderDetail> TblOrderDetails { get; set; } = null!;
@@ -172,8 +176,6 @@ namespace PetShop.Database
 
                 entity.ToTable("tbl_cart");
 
-                entity.HasIndex(e => e.ProductId, "product_id");
-
                 entity.HasIndex(e => e.UserId, "user_id");
 
                 entity.Property(e => e.CartId).HasColumnName("cart_id");
@@ -182,25 +184,69 @@ namespace PetShop.Database
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
+                entity.Property(e => e.IsActive).HasColumnType("bit(1)");
+
+                entity.Property(e => e.IsDeleted).HasColumnType("bit(1)");
+
                 entity.Property(e => e.LastModifiedDate)
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
-                entity.Property(e => e.ProductId).HasColumnName("product_id");
-
-                entity.Property(e => e.Quantity).HasColumnName("quantity");
-
                 entity.Property(e => e.UserId).HasColumnName("user_id");
-
-                entity.HasOne(d => d.Product)
-                    .WithMany(p => p.TblCarts)
-                    .HasForeignKey(d => d.ProductId)
-                    .HasConstraintName("tbl_cart_ibfk_2");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.TblCarts)
                     .HasForeignKey(d => d.UserId)
                     .HasConstraintName("tbl_cart_ibfk_1");
+            });
+
+            modelBuilder.Entity<TblCartDetail>(entity =>
+            {
+                entity.HasKey(e => e.CartDetailId)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("tbl_cart_detail");
+
+                entity.HasIndex(e => e.CartId, "_idx");
+
+                entity.Property(e => e.CartDetailId).HasColumnName("cart_detail_id");
+
+                entity.Property(e => e.CartId).HasColumnName("cart_id");
+
+                entity.Property(e => e.CreatedDate)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.Image).HasMaxLength(255);
+
+                entity.Property(e => e.IsActive).HasColumnType("bit(1)");
+
+                entity.Property(e => e.IsDeleted).HasColumnType("bit(1)");
+
+                entity.Property(e => e.LastModifiedDate)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(255)
+                    .UseCollation("utf8_general_ci")
+                    .HasCharSet("utf8");
+
+                entity.Property(e => e.ProductId).HasColumnName("product_id");
+
+                entity.Property(e => e.Quanlity)
+                    .HasPrecision(10, 2)
+                    .HasColumnName("quanlity");
+
+                entity.Property(e => e.Total)
+                    .HasPrecision(10, 2)
+                    .HasColumnName("total");
+
+                entity.HasOne(d => d.Cart)
+                    .WithMany(p => p.TblCartDetails)
+                    .HasForeignKey(d => d.CartId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_cart_id_tblcart_tblcartdetail");
             });
 
             modelBuilder.Entity<TblCustomer>(entity =>
@@ -250,9 +296,13 @@ namespace PetShop.Database
 
                 entity.ToTable("tbl_order");
 
+                entity.HasIndex(e => e.CartDetailId, "FK_Order_Cart_Detail_Id_idx");
+
                 entity.HasIndex(e => e.CustomerId, "FK_Order_CustomerId");
 
                 entity.Property(e => e.OrderId).HasColumnName("order_id");
+
+                entity.Property(e => e.CartDetailId).HasColumnName("cart_detail_id");
 
                 entity.Property(e => e.CreatedDate)
                     .HasColumnType("datetime")
@@ -279,6 +329,11 @@ namespace PetShop.Database
                 entity.Property(e => e.TotalAmount)
                     .HasPrecision(10, 2)
                     .HasColumnName("total_amount");
+
+                entity.HasOne(d => d.CartDetail)
+                    .WithMany(p => p.TblOrders)
+                    .HasForeignKey(d => d.CartDetailId)
+                    .HasConstraintName("FK_Order_Cart_Detail_Id");
 
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.TblOrders)

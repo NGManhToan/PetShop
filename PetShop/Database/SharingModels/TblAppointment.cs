@@ -1,4 +1,7 @@
-﻿namespace PetShop.Database.SharingModels
+﻿using System;
+using System.Collections.Generic;
+
+namespace PetShop.Database.SharingModels
 {
     public partial class TblAppointment
     {

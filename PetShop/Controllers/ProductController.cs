@@ -5,7 +5,9 @@ using PetShop.Service.Interface;
 
 namespace PetShop.Controllers
 {
-    public class ProductController : Controller
+	[Route("api/[controller]")]
+	[ApiController]
+	public class ProductController : Controller
     {
         private readonly IProductService _productService;
 
@@ -14,8 +16,8 @@ namespace PetShop.Controllers
             _productService = productService;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> ListProduct(int pageNumber = 1, int pageSize = 15)
+		[HttpGet("list")]
+		public async Task<IActionResult> ListProduct(int pageNumber = 1, int pageSize = 15)
         {
             var products = await _productService.ListProduct(pageNumber, pageSize);
             var categoryProduct = await _productService.ListCategoryProducts();
@@ -40,8 +42,8 @@ namespace PetShop.Controllers
             return View(viewModel);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> FillterCategoryProduct(int categoryId, int pageNumber = 1, int pageSize = 15)
+		[HttpGet("category/{categoryId}")]
+		public async Task<IActionResult> FillterCategoryProduct(int categoryId, int pageNumber = 1, int pageSize = 15)
         {
             var result = await _productService.FitterListByCategoryProduct(categoryId, pageNumber, pageSize);
 
@@ -60,8 +62,8 @@ namespace PetShop.Controllers
 
         }
 
-        [HttpGet]
-        public async Task<IActionResult> DetailItem(int productId)
+		[HttpGet("detail/{productId}")]
+		public async Task<IActionResult> DetailItem(int productId)
         {
 
             var result = await _productService.DetailItem(productId);

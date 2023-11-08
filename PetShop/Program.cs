@@ -67,9 +67,15 @@ app.UseSession();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+app.UseEndpoints(endpoints =>
+{
+	endpoints.MapControllerRoute(
+		name: "default",
+		pattern: "{controller=Home}/{action=Index}/{id?}");
+	endpoints.MapControllerRoute(
+		name: "api",
+		pattern: "api/{controller=Product}/{action=ListProduct}/{id?}");
+});
 app.UseCors(x => x
                     .AllowAnyMethod()
                     .AllowAnyHeader()

@@ -1,4 +1,7 @@
-﻿namespace PetShop.Database.SharingModels
+﻿using System;
+using System.Collections.Generic;
+
+namespace PetShop.Database.SharingModels
 {
     public partial class TblOrder
     {
@@ -18,7 +21,9 @@
         public DateTime? CreatedDate { get; set; }
         public DateTime? LastModifiedDate { get; set; }
         public int? LastModifiedBy { get; set; }
+        public int? CartDetailId { get; set; }
 
+        public virtual TblCartDetail? CartDetail { get; set; }
         public virtual TblCustomer? Customer { get; set; }
         public virtual ICollection<TblOrderDetail> TblOrderDetails { get; set; }
     }
