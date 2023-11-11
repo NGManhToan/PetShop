@@ -22,8 +22,7 @@ namespace PetShop.Action
             {
                 Email = account.Email,
                 Password = Encryptor.SHA256Encode(account.Password.Trim()),
-                FirstName = account.FirstName,
-                LastName = account.LastName,
+                FullName = account.FullName,
                 RoleId = 2,
                 CreatedDate = Utils.DateNow(),
                 LastModifiedDate = Utils.DateNow(),

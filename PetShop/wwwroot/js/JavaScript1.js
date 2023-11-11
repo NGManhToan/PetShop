@@ -1,5 +1,6 @@
 ﻿// Hàm cập nhật tổng tiền
 var selectedProducts = [];
+var userInfo = [];
 function updateGrandTotal() {
     var grandTotal = 0;
     var checkboxes = document.querySelectorAll('input[type="checkbox"]');
@@ -7,21 +8,15 @@ function updateGrandTotal() {
     for (var i = 0; i < checkboxes.length; i++) {
         if (checkboxes[i].checked) {
             var id = checkboxes[i].id.split('-')[1];
-            var total = document.getElementById('total-' + id).innerText;
+            var Price = document.getElementById('total-' + id).innerText;
             
             var productName = document.getElementById('name-' + id).innerText;
-
-            
-
             var Quanlity = document.getElementById("quantity-" + id).value;
-            alert(Quanlity);
-
-
             var image = document.getElementById('image-' + id).src;
             console.log(image);
-            total = total.replace(/[^0-9.-]+/g, "");
-            grandTotal += parseFloat(total);
-            selectedProducts.push({ id: id, total: parseFloat(total), name: productName, quantity: Quanlity, image: image });
+            Price = Price.replace(/[^0-9.-]+/g, "");
+            grandTotal += parseFloat(Price);
+            selectedProducts.push({ id: parseFloat(id), Price: Price, name: productName, quantity: Quanlity, image: image });
         }
     }
     document.getElementById('grand-total-display').innerText = "Grand Total: $" + grandTotal.toFixed(2);
@@ -39,27 +34,40 @@ function GetInforUser() {
     var textcity = selectedProvince.options[selectedProvince.selectedIndex].text;
     var textdistrict = selectedDistrict.options[selectedDistrict.selectedIndex].text;
     var textward = selectedWard.options[selectedWard.selectedIndex].text;
-    var customer_contact_info = textcity + " " + textdistrict + " " + textward;
+    var customer_contact_info = contactAddress + " " + textcity + " " + textdistrict + " " + textward;
 
     // Create an object with user information
-    var userInfo = {
+    var Info = {
         email: email,
         fullName: fullName,
-        contactAddress: contactAddress,
         customer_contact_info: customer_contact_info,
     };
 
-    // Push the user information object into the selectedProducts array
-    selectedProducts.push(userInfo);
+    // Set userInfo as an object, not an array
+    userInfo = Info;
 
     // You can now use the selectedProducts array as needed, e.g., send it to your server or perform other actions.
+    console.log(userInfo);
     console.log(selectedProducts); // Log the selected products for testing
-
-    // If you want to send this data to your server, you can use an AJAX request or any suitable method.
 }
+
+function removeProductAndReload(productId) {
+    // Xóa thông tin từ localStorage
+    removeFromLocalStorage(productId);
+
+    // Xóa phần tử khỏi DOM nếu tồn tại
+    var row = document.getElementById('row-' + productId);
+    if (row) {
+        row.remove();
+    }
+
+    // Tải lại trang
+    location.reload();
+}
+
 function updateQuantity(productId, change, price, productName, productImage, action) {
     var inputElement = document.getElementById(productId);
-    var quantity = parseInt(inputElement.value);
+    var quantity = inputElement ? parseInt(inputElement.value) : 0;
 
     if (action === 'increase') { // Use 'increase' as a string
         quantity += change; // Increase the quantity
@@ -68,13 +76,18 @@ function updateQuantity(productId, change, price, productName, productImage, act
     }
 
     if (quantity <= 0) {
-        removeFromLocalStorage(productId);
-        var row = document.getElementById('row-' + productId); // Use quotes around the ID
-        row.remove();
+        // Show confirmation dialog
+        var confirmDelete = window.confirm("Do you want to delete this product?");
+        if (confirmDelete) {
+            removeProductAndReload(productId);
+        } else {
+            // Reset quantity to 1 if the user cancels
+            quantity = 1;
+        }
     } else {
         UpdateToLocalStorage(productId, productName, price, productImage, quantity);
         inputElement.value = quantity;
-        var totalElement = document.getElementById('total-' + productId); // Use quotes around the ID
+        var totalElement = document.getElementById('total-' + productId);
         totalElement.innerText = "$" + (quantity * price).toFixed(2);
     }
 
@@ -83,7 +96,9 @@ function updateQuantity(productId, change, price, productName, productImage, act
 
 
 
-// Hàm loại bỏ sản phẩm khỏi Local Storage
+
+
+/* Hàm loại bỏ sản phẩm khỏi Local Storage*/
 function removeFromLocalStorage(productId) {
     if (typeof (Storage) !== "undefined") {
         var cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
@@ -176,31 +191,68 @@ window.onload = function () {
     }
 
 };
+function removeFromLocalStorage(id) {
+    // Get the existing data
+    let existing = localStorage.getItem('selectedProducts');
+
+    // If no existing data, create an array
+    // Otherwise, convert the localStorage string to an array
+    existing = existing ? JSON.parse(existing) : [];
+
+    // Remove item from the array
+    const index = existing.indexOf(id);
+    if (index !== -1) {
+        existing.splice(index, 1);
+    }
+
+    // Save back to localStorage
+    localStorage.setItem('selectedProducts', JSON.stringify(existing));
+}
 
 document.getElementById("proceed-to-checkout").addEventListener("click", () => {
-        // Xử lý khi người dùng nhấn nút "Checkout"
+    // Xử lý khi người dùng nhấn nút "Checkout"
     GetInforUser();
-    fetch('/api/Cart/checkout', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(selectedProducts),
+    fetch('/api/Cart/noAccount', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            CartItems: selectedProducts,
+            InfoUser: userInfo,
+        }),
+    })
+        .then(response => {
+            if (response.ok) {
+                console.log("Checkout successful!");
 
-
-        })
-            .then(response => {
-                if (response.ok) {
-                    // Handle success, e.g., show a success message or redirect to a confirmation page
-                    console.log("Checkout successful!");
-                } else {
-                    // Handle errors, e.g., show an error message
-                    console.log("Checkout failed.");
+                // Remove selected products from local storage
+                for (let i = 0; i < selectedProducts.length; i++) {
+                    removeFromLocalStorage(selectedProducts[i].id);
                 }
-            })
-            .catch(error => { // Add the parameter to capture the error
-                // Handle the error
-                console.error(error.message);
-            });
+
+                // Remove selected rows from the displayed cart
+                for (let i = 0; i < selectedProducts.length; i++) {
+                    var row = document.getElementById('row-' + selectedProducts[i].id);
+                    if (row) {
+                        row.remove();
+                    }
+                }
+
+                // Clear the selected products array
+                selectedProducts = [];
+
+                // Update the grand total after removing items
+                updateGrandTotal();
+
+                // Reload the page
+                location.reload();
+            } else {
+                console.log("Checkout failed.");
+            }
+        })
+        .catch(error => {
+            console.error(error.message);
+        });
 });
 

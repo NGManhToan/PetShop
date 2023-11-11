@@ -49,62 +49,78 @@ namespace PetShop.Controllers
 			var ramdomPass = RamdomPass.RandomPassword();
 			try
 			{
-				// Truy cập dữ liệu từ checkoutRequest thay vì các biến global
-				TblUser user = new TblUser
-				{
-					Email = checkoutRequest.InfoUser.Email,
-					Password = Encryptor.SHA256Encode(ramdomPass),
-					LastName = checkoutRequest.InfoUser.LastName,
-					FirstName = checkoutRequest.InfoUser.FirstName,
-				};
+                using (var transaction = _context.Database.BeginTransaction())
+                {
+                    // Truy cập dữ liệu từ checkoutRequest thay vì các biến global
+                    int maxUserId = _context.TblUsers.Max(u => u.UserId); // Lấy ID lớn nhất hiện tại
 
-				TblCustomer customer = new TblCustomer
-				{
-                    UserId = user.UserId,
-					CustomerName = user.FirstName + " " + user.LastName,
-					CustomerContactInfo = checkoutRequest.InfoUser.customer_contact_info,
-				};
-
-				// Lưu thông tin người dùng và khách hàng vào cơ sở dữ liệu
-				_context.TblUsers.Add(user);
-				_context.TblCustomers.Add(customer);
-
-				foreach (var item in checkoutRequest.CartItems)
-				{
-					TblOrder tblOrder = new TblOrder
-					{
-						TotalAmount = item.Price,
-                        CustomerId = customer.CustomerId,
-                        CreatedBy = customer.CustomerId,
-                        OrderDate = Utils.DateNow(),
-                        OrderStatus = "Đã đặt",
-                        IsActive = 1,
-                        IsDeleted = 0,
-                        LastModifiedBy = customer.CustomerId,
-
-					};
-
-					TblOrderDetail tblOrderDetail = new TblOrderDetail
-					{
-                        OrderId = tblOrder.OrderId,
-						Quantity = item.Quantity,
-						ProductId = item.Id,
-                        CreatedBy = tblOrder.CreatedBy,
-                        IsActive = 1,
-                        IsDeleted = 0,
-                        LastModifiedBy = tblOrder.CreatedBy,
+                    TblUser user = new TblUser
+                    {
+                        UserId = maxUserId + 1,
+                        Email = checkoutRequest.InfoUser.Email,
+                        Password = Encryptor.SHA256Encode(ramdomPass),
+                        FullName = checkoutRequest.InfoUser.FullName,
                     };
 
-					_context.TblOrders.Add(tblOrder);
-					_context.TblOrderDetails.Add(tblOrderDetail);
-				}
+                    _context.TblUsers.Add(user);
+                    await _context.SaveChangesAsync();
 
-				await _context.SaveChangesAsync();
+                    TblCustomer customer = new TblCustomer
+                    {
+                        UserId = user.UserId,
+                        CustomerName = user.FullName,
+                        CustomerContactInfo = checkoutRequest.InfoUser.Customer_Contact_Info,
+                        CreatedBy = user.UserId,
+                        IsActive = 1,
+                        IsDeleted = 0,
+                        LastModifiedBy = user.UserId,
+                    };
 
-				return Ok("Dữ liệu giỏ hàng đã được lưu.");
+                    // Lưu thông tin người dùng và khách hàng vào cơ sở dữ liệu
+
+                    _context.TblCustomers.Add(customer);
+                    await _context.SaveChangesAsync();
+
+                    foreach (var item in checkoutRequest.CartItems)
+                    {
+                        TblOrder tblOrder = new TblOrder
+                        {
+                            TotalAmount = item.Price,
+                            CustomerId = customer.CustomerId,
+                            CreatedBy = customer.CustomerId,
+                            OrderDate = Utils.DateNow(),
+                            OrderStatus = "Đang chờ xử lý",
+                            IsActive = 1,
+                            IsDeleted = 0,
+                            LastModifiedBy = customer.CustomerId,
+
+                        };
+
+                        _context.TblOrders.Add(tblOrder);
+                        await _context.SaveChangesAsync();
+
+                        TblOrderDetail tblOrderDetail = new TblOrderDetail
+                        {
+                            OrderId = tblOrder.OrderId,
+                            Quantity = item.Quantity,
+                            ProductId = item.Id,
+                            CreatedBy = tblOrder.CreatedBy,
+                            IsActive = 1,
+                            IsDeleted = 0,
+                            LastModifiedBy = tblOrder.CreatedBy,
+                        };
+
+
+                        _context.TblOrderDetails.Add(tblOrderDetail);
+                        transaction.Commit();
+                        await _context.SaveChangesAsync();
+                    }
+                    return Ok("Dữ liệu giỏ hàng đã được lưu.");
+                }
 			}
 			catch (Exception ex)
 			{
+
 				return StatusCode(500, "Không thể lưu dữ liệu giỏ hàng vào cơ sở dữ liệu: " + ex.Message);
 			}
 		}

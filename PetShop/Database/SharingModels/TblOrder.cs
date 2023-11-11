@@ -5,11 +5,6 @@ namespace PetShop.Database.SharingModels
 {
     public partial class TblOrder
     {
-        public TblOrder()
-        {
-            TblOrderDetails = new HashSet<TblOrderDetail>();
-        }
-
         public int OrderId { get; set; }
         public int? CustomerId { get; set; }
         public DateTime? OrderDate { get; set; }
@@ -25,6 +20,5 @@ namespace PetShop.Database.SharingModels
 
         public virtual TblCartDetail? CartDetail { get; set; }
         public virtual TblCustomer? Customer { get; set; }
-        public virtual ICollection<TblOrderDetail> TblOrderDetails { get; set; }
     }
 }

@@ -35,7 +35,7 @@ namespace PetShop.Controllers
         }
 
 		[HttpPost("login")]
-		public async Task<IActionResult> Login(LoginModel loginModel)
+		public async Task<IActionResult> Login([FromForm] LoginModel loginModel)
         {
             var loginResponse = await _loginService.Login(loginModel);
 

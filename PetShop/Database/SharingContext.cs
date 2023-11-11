@@ -376,11 +376,6 @@ namespace PetShop.Database
 
                 entity.Property(e => e.Quantity).HasColumnName("quantity");
 
-                entity.HasOne(d => d.Order)
-                    .WithMany(p => p.TblOrderDetails)
-                    .HasForeignKey(d => d.OrderId)
-                    .HasConstraintName("FK_OrderDetail_OrderId");
-
                 entity.HasOne(d => d.Pet)
                     .WithMany(p => p.TblOrderDetails)
                     .HasForeignKey(d => d.PetId)
@@ -619,7 +614,10 @@ namespace PetShop.Database
                     .HasMaxLength(255)
                     .HasColumnName("email");
 
-                entity.Property(e => e.FirstName).HasMaxLength(20);
+                entity.Property(e => e.FullName)
+                    .HasMaxLength(255)
+                    .UseCollation("utf8_general_ci")
+                    .HasCharSet("utf8");
 
                 entity.Property(e => e.IsActive)
                     .HasColumnType("bit(1)")
@@ -632,8 +630,6 @@ namespace PetShop.Database
                 entity.Property(e => e.LastModifiedDate)
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("CURRENT_TIMESTAMP");
-
-                entity.Property(e => e.LastName).HasMaxLength(30);
 
                 entity.Property(e => e.Password)
                     .HasMaxLength(255)

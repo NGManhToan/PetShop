@@ -17,7 +17,6 @@ namespace PetShop.Database.SharingModels
         public DateTime? LastModifiedDate { get; set; }
         public int? LastModifiedBy { get; set; }
 
-        public virtual TblOrder? Order { get; set; }
         public virtual TblPet? Pet { get; set; }
         public virtual TblProduct? Product { get; set; }
     }
