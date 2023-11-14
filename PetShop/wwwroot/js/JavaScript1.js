@@ -46,9 +46,9 @@ function GetInforUser() {
     // Set userInfo as an object, not an array
     userInfo = Info;
 
-    // You can now use the selectedProducts array as needed, e.g., send it to your server or perform other actions.
-    console.log(userInfo);
-    console.log(selectedProducts); // Log the selected products for testing
+    //// You can now use the selectedProducts array as needed, e.g., send it to your server or perform other actions.
+    //console.log(userInfo);
+    //console.log(selectedProducts); // Log the selected products for testing
 }
 
 function removeProductAndReload(productId) {
@@ -191,23 +191,7 @@ window.onload = function () {
     }
 
 };
-function removeFromLocalStorage(id) {
-    // Get the existing data
-    let existing = localStorage.getItem('selectedProducts');
 
-    // If no existing data, create an array
-    // Otherwise, convert the localStorage string to an array
-    existing = existing ? JSON.parse(existing) : [];
-
-    // Remove item from the array
-    const index = existing.indexOf(id);
-    if (index !== -1) {
-        existing.splice(index, 1);
-    }
-
-    // Save back to localStorage
-    localStorage.setItem('selectedProducts', JSON.stringify(existing));
-}
 
 document.getElementById("proceed-to-checkout").addEventListener("click", () => {
     // Xử lý khi người dùng nhấn nút "Checkout"
@@ -227,23 +211,7 @@ document.getElementById("proceed-to-checkout").addEventListener("click", () => {
                 console.log("Checkout successful!");
 
                 // Remove selected products from local storage
-                for (let i = 0; i < selectedProducts.length; i++) {
-                    removeFromLocalStorage(selectedProducts[i].id);
-                }
-
-                // Remove selected rows from the displayed cart
-                for (let i = 0; i < selectedProducts.length; i++) {
-                    var row = document.getElementById('row-' + selectedProducts[i].id);
-                    if (row) {
-                        row.remove();
-                    }
-                }
-
-                // Clear the selected products array
-                selectedProducts = [];
-
-                // Update the grand total after removing items
-                updateGrandTotal();
+                clearLocalStorage(selectedProducts);
 
                 // Reload the page
                 location.reload();
@@ -255,4 +223,25 @@ document.getElementById("proceed-to-checkout").addEventListener("click", () => {
             console.error(error.message);
         });
 });
+
+// Add a function to clear selected products from local storage
+function clearLocalStorage(productsToRemove) {
+    if (typeof (Storage) !== "undefined") {
+        // Get current cart items from local storage
+        var cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+
+/*        console.log("Before filter:", cartItems);*/
+
+        // Remove selected products from the local storage array
+        cartItems = cartItems.filter(item => !productsToRemove.some(selectedItem => selectedItem.id === parseInt(item.productId)));
+
+/*        console.log("After filter:", cartItems);*/
+
+        // Update local storage with the modified cart items
+        localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    } else {
+        alert("Local storage is not supported in this browser.");
+    }
+}
+
 

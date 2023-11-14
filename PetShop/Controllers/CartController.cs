@@ -125,6 +125,11 @@ namespace PetShop.Controllers
 			}
 		}
 
+        [HttpGet]
+        public async Task<IActionResult> CheckoutBill()
+        {
+            return View();
+        }
 
 		[HttpPost("checkout")]
         public async Task<IActionResult> Checkout([FromBody] List<CartViewModel> cartItems)
