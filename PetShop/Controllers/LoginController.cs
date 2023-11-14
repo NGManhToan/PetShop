@@ -27,14 +27,21 @@ namespace PetShop.Controllers
         }
 
 		[HttpGet("login")]
-		public IActionResult Login(string returnUrl)
+		public IActionResult Login(string? returnUrl)
         {
-            ViewBag.ReturnUrl = returnUrl;
-            HttpContext.Session.SetString("Name", returnUrl);
-            return View();
+            if (returnUrl != null)
+            {
+                ViewBag.ReturnUrl = returnUrl;
+                HttpContext.Session.SetString("Name", returnUrl);
+                return View();
+            }
+                return View();
+            
+           
         }
 
-		[HttpPost("login")]
+
+        [HttpPost("login")]
 		public async Task<IActionResult> Login([FromForm] LoginModel loginModel)
         {
             var loginResponse = await _loginService.Login(loginModel);

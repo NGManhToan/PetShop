@@ -1,8 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PetShop.Action.Interface;
 using PetShop.Database;
 using PetShop.Database.SharingModels;
 using PetShop.Models.Cart;
+using PetShop.Models.UtilsProject;
 
 namespace PetShop.Action
 {
@@ -15,63 +17,87 @@ namespace PetShop.Action
             _context = context;
         }
 
-    //    public async Task<TblCart> AddToCart(CartItem cart)
-    //    {
-    //        var product = cart.Product.FirstOrDefault();
-    //        if (product != null)
-    //        {
-    //            var cartItem = await _context.TblCarts
-    //                .FirstOrDefaultAsync(c => c.ProductId == product.Id);
+                public async Task CheckoutNoAcc(CheckoutRequestDto checkoutRequest)
+                {
+                    var ramdomPass = RamdomPass.RandomPassword();
+                    try
+                    {
+                        using (var transaction = _context.Database.BeginTransaction())
+                        {
+                            // Truy cập dữ liệu từ checkoutRequest thay vì các biến global
+                            int maxUserId = _context.TblUsers.Max(u => u.UserId); // Lấy ID lớn nhất hiện tại
 
-    //            if (cartItem != null)
-    //            {
-    //                // Nếu sản phẩm đã có trong giỏ hàng, tăng số lượng
-    //                cartItem.Quantity += cart.Quantity; // Sửa ở đây
-    //            }
-    //            else
-    //            {
-    //                // Nếu sản phẩm chưa có trong giỏ hàng, thêm mới với số lượng từ cart
-    //                var newCartItem = new TblCart
-    //                {
-    //                    ProductId = product.Id,
-    //                    Quantity = cart.Quantity // Sửa ở đây
-    //                };
-    //                _context.TblCarts.Add(newCartItem);
-    //            }
+                            TblUser user = new TblUser
+                            {
+                                UserId = maxUserId + 1,
+                                Email = checkoutRequest.InfoUser.Email,
+                                Password = Encryptor.SHA256Encode(ramdomPass),
+                                FullName = checkoutRequest.InfoUser.FullName,
+                            };
 
-    //            await _context.SaveChangesAsync(); // Lưu thay đổi vào cơ sở dữ liệu
-    //        }
+                            _context.TblUsers.Add(user);
+                            await _context.SaveChangesAsync();
 
-    //        return new TblCart(); // Cập nhật logic trả về nếu cần thiết
-    //    }
+                            TblCustomer customer = new TblCustomer
+                            {
+                                UserId = user.UserId,
+                                CustomerName = user.FullName,
+                                CustomerContactInfo = checkoutRequest.InfoUser.Customer_Contact_Info,
+                                PhoneNumber = checkoutRequest.InfoUser.PhoneNumber,
+                                CreatedBy = user.UserId,
+                                IsActive = 1,
+                                IsDeleted = 0,
+                                LastModifiedBy = user.UserId,
+                            };
 
+                            // Lưu thông tin người dùng và khách hàng vào cơ sở dữ liệu
 
-    //    public async Task<TblCart> UpdateToCart(CartItem cartItem)
-    //    {
-    //        var updateItem = await _context.TblCarts.FindAsync(cartItem.ProductId);
-    //        if (updateItem != null)
-    //        {
-    //            updateItem.Quantity = cartItem.Quantity;
-    //            _context.TblCarts.Update(updateItem);
-    //            await _context.SaveChangesAsync();
+                            _context.TblCustomers.Add(customer);
+                            await _context.SaveChangesAsync();
 
-    //        }
-    //        return new TblCart();
-    //    }
+                            foreach (var item in checkoutRequest.CartItems)
+                            {
+                                TblOrder tblOrder = new TblOrder
+                                {
+                                    TotalAmount = item.Price,
+                                    CustomerId = customer.CustomerId,
+                                    PhoneNumber = customer.PhoneNumber,
+                                    CreatedBy = customer.CustomerId,
+                                    OrderDate = Utils.DateNow(),
+                                    OrderStatus = "Đang chờ xử lý",
+                                    IsActive = 1,
+                                    IsDeleted = 0,
+                                    LastModifiedBy = customer.CustomerId,
 
-    //    public async Task<bool> DeleteToCart(CartItem cartItem)
-    //    {
-    //        var deleteItem = await _context.TblCarts.FindAsync(cartItem.ProductId);
-    //        if (deleteItem != null)
-    //        {
-    //            _context.TblCarts.Remove(deleteItem);
-    //            await _context.SaveChangesAsync();
-    //            return true;
-    //        }
-    //        else
-    //        {
-    //            return false;
-    //        }
-    //    }
+                                };
+
+                                _context.TblOrders.Add(tblOrder);
+                                await _context.SaveChangesAsync();
+
+                                TblOrderDetail tblOrderDetail = new TblOrderDetail
+                                {
+                                    OrderId = tblOrder.OrderId,
+                                    Quantity = item.Quantity,
+                                    ProductId = item.Id,
+                                    CreatedBy = tblOrder.CreatedBy,
+                                    IsActive = 1,
+                                    IsDeleted = 0,
+                                    LastModifiedBy = tblOrder.CreatedBy,
+                                };
+                                _context.TblOrderDetails.Add(tblOrderDetail);
+                                await _context.SaveChangesAsync();
+                            }
+
+                            transaction.Commit();
+                    
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+
+                        Console.WriteLine(ex.ToString());
+                    }
+                }
     }
+
 }

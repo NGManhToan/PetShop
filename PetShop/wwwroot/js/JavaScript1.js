@@ -229,20 +229,20 @@ document.getElementById("proceed-to-checkout").addEventListener("click", () => {
             })
                 .then(response => {
                     if (response.ok) {
-                        console.log("Thanh toán thành công!");
+                        console.log("Đặt hàng thành công!");
 
                         // Xóa các sản phẩm đã chọn từ local storage
                         clearLocalStorage(selectedProducts);
 
                         // Hiển thị thông báo thành công
-                        alert("Thanh toán thành công!");
+                        alert("Đặt hàng thành công!");
 
                         // Tải lại trang
                         location.reload();
                     } else {
-                        console.log("Thanh toán thất bại.");
+                        console.log("Đặt hàng thất bại.");
                         // Hiển thị thông báo thất bại
-                        alert("Thanh toán thất bại.");
+                        alert("Đặt hàng thất bại.");
                     }
                 })
                 .catch(error => {

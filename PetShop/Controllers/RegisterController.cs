@@ -28,7 +28,7 @@ namespace PetShop.Controllers
                 TempData["ErrorMessage"] = "Thông tin chưa đầy đủ";
                 return View(register);
             }
-            return RedirectToAction("Login", "Login");
+            return RedirectToAction("Login", "Login", new { returnUrl = "desiredUrlAfterLogin" });
         }
     }
 }
