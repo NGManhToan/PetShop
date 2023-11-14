@@ -70,6 +70,7 @@ namespace PetShop.Controllers
                         UserId = user.UserId,
                         CustomerName = user.FullName,
                         CustomerContactInfo = checkoutRequest.InfoUser.Customer_Contact_Info,
+                        PhoneNumber = checkoutRequest.InfoUser.PhoneNumber,
                         CreatedBy = user.UserId,
                         IsActive = 1,
                         IsDeleted = 0,
@@ -87,6 +88,7 @@ namespace PetShop.Controllers
                         {
                             TotalAmount = item.Price,
                             CustomerId = customer.CustomerId,
+                            PhoneNumber = customer.PhoneNumber,
                             CreatedBy = customer.CustomerId,
                             OrderDate = Utils.DateNow(),
                             OrderStatus = "Đang chờ xử lý",
@@ -109,12 +111,11 @@ namespace PetShop.Controllers
                             IsDeleted = 0,
                             LastModifiedBy = tblOrder.CreatedBy,
                         };
-
-
                         _context.TblOrderDetails.Add(tblOrderDetail);
-                        transaction.Commit();
                         await _context.SaveChangesAsync();
                     }
+                    
+                    transaction.Commit();
                     return Ok("Dữ liệu giỏ hàng đã được lưu.");
                 }
 			}
@@ -124,12 +125,6 @@ namespace PetShop.Controllers
 				return StatusCode(500, "Không thể lưu dữ liệu giỏ hàng vào cơ sở dữ liệu: " + ex.Message);
 			}
 		}
-
-        [HttpGet]
-        public async Task<IActionResult> CheckoutBill()
-        {
-            return View();
-        }
 
 		[HttpPost("checkout")]
         public async Task<IActionResult> Checkout([FromBody] List<CartViewModel> cartItems)

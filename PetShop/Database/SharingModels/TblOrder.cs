@@ -7,9 +7,10 @@ namespace PetShop.Database.SharingModels
     {
         public int OrderId { get; set; }
         public int? CustomerId { get; set; }
-        public DateTime? OrderDate { get; set; }
+        public DateTime OrderDate { get; set; }
+        public string PhoneNumber { get; set; } = null!;
         public string? OrderStatus { get; set; }
-        public decimal? TotalAmount { get; set; }
+        public decimal TotalAmount { get; set; }
         public int? CreatedBy { get; set; }
         public ulong? IsDeleted { get; set; }
         public ulong? IsActive { get; set; }

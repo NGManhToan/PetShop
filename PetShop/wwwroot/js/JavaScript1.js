@@ -25,7 +25,8 @@ function updateGrandTotal() {
 function GetInforUser() {
     var email = document.getElementById("email").value;
     var fullName = document.getElementById("fullName").value;
-    var contactAddress = document.getElementById("contactAddress").value;
+    var PhoneNumber = document.getElementById("number").value;
+    var contactAddress = document.getElementById("deliveryaddress").value;
 
     // Get selected values from select elements
     var selectedProvince = document.getElementById("city");
@@ -40,6 +41,7 @@ function GetInforUser() {
     var Info = {
         email: email,
         fullName: fullName,
+        PhoneNumber: PhoneNumber,
         customer_contact_info: customer_contact_info,
     };
 
@@ -47,8 +49,8 @@ function GetInforUser() {
     userInfo = Info;
 
     //// You can now use the selectedProducts array as needed, e.g., send it to your server or perform other actions.
-    //console.log(userInfo);
-    //console.log(selectedProducts); // Log the selected products for testing
+    console.log(userInfo);
+    console.log(selectedProducts); // Log the selected products for testing
 }
 
 
@@ -63,7 +65,7 @@ function updateQuantity(productId, change, price, productName, productImage, act
         quantity += change; // Decrease the quantity
     }
 
-    if (quantity <= 0) {
+    if (quantity <= 1) {
         // Show confirmation dialog
         var confirmDelete = window.confirm("Do you want to delete this product?");
         if (confirmDelete) {
@@ -189,36 +191,68 @@ window.onload = function () {
 };
 
 
+function validateForm() {
+    let fullName = document.getElementById('fullName').value;
+    let email = document.getElementById('email').value;
+    let number = document.getElementById('number').value;
+    let city = document.getElementById('city').value;
+    let district = document.getElementById('district').value;
+    let ward = document.getElementById('ward').value;
+    let deliveryAddress = document.getElementById('deliveryaddress').value;
+
+    // Check if any required field is empty
+    if (!fullName || !email || !number || !city || !district || !ward || !deliveryAddress) {
+        alert('Please fill in all required fields');
+        return false;
+    }
+    return true;
+}
+
 document.getElementById("proceed-to-checkout").addEventListener("click", () => {
-    // Xử lý khi người dùng nhấn nút "Checkout"
-    GetInforUser();
-    fetch('/api/Cart/noAccount', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            CartItems: selectedProducts,
-            InfoUser: userInfo,
-        }),
-    })
-        .then(response => {
-            if (response.ok) {
-                console.log("Checkout successful!");
+    // Kiểm tra xem có sản phẩm được chọn không
+    if (validateForm()) {
+        // Check if there are selected products
+        if (selectedProducts.length === 0) {
+            alert("Vui lòng chọn sản phẩm trước khi thanh toán.");
+        } else {
+            // Xử lý khi người dùng nhấn nút "Checkout"
+            GetInforUser();
+            fetch('/api/Cart/noAccount', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    CartItems: selectedProducts,
+                    InfoUser: userInfo,
+                }),
+            })
+                .then(response => {
+                    if (response.ok) {
+                        console.log("Thanh toán thành công!");
 
-                // Remove selected products from local storage
-                clearLocalStorage(selectedProducts);
+                        // Xóa các sản phẩm đã chọn từ local storage
+                        clearLocalStorage(selectedProducts);
 
-                // Reload the page
-                location.reload();
-            } else {
-                console.log("Checkout failed.");
-            }
-        })
-        .catch(error => {
-            console.error(error.message);
-        });
+                        // Hiển thị thông báo thành công
+                        alert("Thanh toán thành công!");
+
+                        // Tải lại trang
+                        location.reload();
+                    } else {
+                        console.log("Thanh toán thất bại.");
+                        // Hiển thị thông báo thất bại
+                        alert("Thanh toán thất bại.");
+                    }
+                })
+                .catch(error => {
+                    console.error(error.message);
+                });
+        }
+    }
+    // If form validation fails, it will halt the checkout process.
 });
+
 
 // Add a function to clear selected products from local storage
 function clearLocalStorage(productsToRemove) {

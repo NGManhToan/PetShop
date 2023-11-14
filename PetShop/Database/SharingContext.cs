@@ -281,6 +281,8 @@ namespace PetShop.Database
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
+                entity.Property(e => e.PhoneNumber).HasMaxLength(45);
+
                 entity.Property(e => e.UserId).HasColumnName("user_id");
 
                 entity.HasOne(d => d.User)
@@ -325,6 +327,8 @@ namespace PetShop.Database
                 entity.Property(e => e.OrderStatus)
                     .HasMaxLength(20)
                     .HasColumnName("order_status");
+
+                entity.Property(e => e.PhoneNumber).HasMaxLength(45);
 
                 entity.Property(e => e.TotalAmount)
                     .HasPrecision(10, 2)
