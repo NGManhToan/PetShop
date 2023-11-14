@@ -1,6 +1,5 @@
 ﻿// Hàm cập nhật tổng tiền
 var selectedProducts = [];
-var userInfo = [];
 function updateGrandTotal() {
     var grandTotal = 0;
     var checkboxes = document.querySelectorAll('input[type="checkbox"]');
@@ -8,15 +7,21 @@ function updateGrandTotal() {
     for (var i = 0; i < checkboxes.length; i++) {
         if (checkboxes[i].checked) {
             var id = checkboxes[i].id.split('-')[1];
-            var Price = document.getElementById('total-' + id).innerText;
-            
+            var total = document.getElementById('total-' + id).innerText;
+
             var productName = document.getElementById('name-' + id).innerText;
+
+
+
             var Quanlity = document.getElementById("quantity-" + id).value;
+            alert(Quanlity);
+
+
             var image = document.getElementById('image-' + id).src;
             console.log(image);
-            Price = Price.replace(/[^0-9.-]+/g, "");
-            grandTotal += parseFloat(Price);
-            selectedProducts.push({ id: parseFloat(id), Price: Price, name: productName, quantity: Quanlity, image: image });
+            total = total.replace(/[^0-9.-]+/g, "");
+            grandTotal += parseFloat(total);
+            selectedProducts.push({ id: id, total: parseFloat(total), name: productName, quantity: Quanlity, image: image });
         }
     }
     document.getElementById('grand-total-display').innerText = "Grand Total: $" + grandTotal.toFixed(2);
@@ -34,40 +39,27 @@ function GetInforUser() {
     var textcity = selectedProvince.options[selectedProvince.selectedIndex].text;
     var textdistrict = selectedDistrict.options[selectedDistrict.selectedIndex].text;
     var textward = selectedWard.options[selectedWard.selectedIndex].text;
-    var customer_contact_info = contactAddress + " " + textcity + " " + textdistrict + " " + textward;
+    var customer_contact_info = textcity + " " + textdistrict + " " + textward;
 
     // Create an object with user information
-    var Info = {
+    var userInfo = {
         email: email,
         fullName: fullName,
+        contactAddress: contactAddress,
         customer_contact_info: customer_contact_info,
     };
 
-    // Set userInfo as an object, not an array
-    userInfo = Info;
+    // Push the user information object into the selectedProducts array
+    selectedProducts.push(userInfo);
 
-    //// You can now use the selectedProducts array as needed, e.g., send it to your server or perform other actions.
-    //console.log(userInfo);
-    //console.log(selectedProducts); // Log the selected products for testing
+    // You can now use the selectedProducts array as needed, e.g., send it to your server or perform other actions.
+    console.log(selectedProducts); // Log the selected products for testing
+
+    // If you want to send this data to your server, you can use an AJAX request or any suitable method.
 }
-
-function removeProductAndReload(productId) {
-    // Xóa thông tin từ localStorage
-    removeFromLocalStorage(productId);
-
-    // Xóa phần tử khỏi DOM nếu tồn tại
-    var row = document.getElementById('row-' + productId);
-    if (row) {
-        row.remove();
-    }
-
-    // Tải lại trang
-    location.reload();
-}
-
 function updateQuantity(productId, change, price, productName, productImage, action) {
     var inputElement = document.getElementById(productId);
-    var quantity = inputElement ? parseInt(inputElement.value) : 0;
+    var quantity = parseInt(inputElement.value);
 
     if (action === 'increase') { // Use 'increase' as a string
         quantity += change; // Increase the quantity
@@ -76,18 +68,13 @@ function updateQuantity(productId, change, price, productName, productImage, act
     }
 
     if (quantity <= 0) {
-        // Show confirmation dialog
-        var confirmDelete = window.confirm("Do you want to delete this product?");
-        if (confirmDelete) {
-            removeProductAndReload(productId);
-        } else {
-            // Reset quantity to 1 if the user cancels
-            quantity = 1;
-        }
+        removeFromLocalStorage(productId);
+        var row = document.getElementById('row-' + productId); // Use quotes around the ID
+        row.remove();
     } else {
         UpdateToLocalStorage(productId, productName, price, productImage, quantity);
         inputElement.value = quantity;
-        var totalElement = document.getElementById('total-' + productId);
+        var totalElement = document.getElementById('total-' + productId); // Use quotes around the ID
         totalElement.innerText = "$" + (quantity * price).toFixed(2);
     }
 
@@ -96,9 +83,7 @@ function updateQuantity(productId, change, price, productName, productImage, act
 
 
 
-
-
-/* Hàm loại bỏ sản phẩm khỏi Local Storage*/
+// Hàm loại bỏ sản phẩm khỏi Local Storage
 function removeFromLocalStorage(productId) {
     if (typeof (Storage) !== "undefined") {
         var cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
@@ -192,56 +177,30 @@ window.onload = function () {
 
 };
 
-
 document.getElementById("proceed-to-checkout").addEventListener("click", () => {
     // Xử lý khi người dùng nhấn nút "Checkout"
     GetInforUser();
-    fetch('/api/Cart/noAccount', {
+    fetch('/api/Cart/checkout', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-            CartItems: selectedProducts,
-            InfoUser: userInfo,
-        }),
+        body: JSON.stringify(selectedProducts),
+
+
     })
         .then(response => {
             if (response.ok) {
+                // Handle success, e.g., show a success message or redirect to a confirmation page
                 console.log("Checkout successful!");
-
-                // Remove selected products from local storage
-                clearLocalStorage(selectedProducts);
-
-                // Reload the page
-                location.reload();
             } else {
+                // Handle errors, e.g., show an error message
                 console.log("Checkout failed.");
             }
         })
-        .catch(error => {
+        .catch(error => { // Add the parameter to capture the error
+            // Handle the error
             console.error(error.message);
         });
 });
-
-// Add a function to clear selected products from local storage
-function clearLocalStorage(productsToRemove) {
-    if (typeof (Storage) !== "undefined") {
-        // Get current cart items from local storage
-        var cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-
-/*        console.log("Before filter:", cartItems);*/
-
-        // Remove selected products from the local storage array
-        cartItems = cartItems.filter(item => !productsToRemove.some(selectedItem => selectedItem.id === parseInt(item.productId)));
-
-/*        console.log("After filter:", cartItems);*/
-
-        // Update local storage with the modified cart items
-        localStorage.setItem("cartItems", JSON.stringify(cartItems));
-    } else {
-        alert("Local storage is not supported in this browser.");
-    }
-}
-
 
