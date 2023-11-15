@@ -17,7 +17,7 @@ namespace PetShop.Service
             _cartAction = cartAction;
         }
 
-        public async Task<List<CartViewModel>> GetListCart(int id)
+        public async Task<List<CartViewModelAcc>> GetListCart(int id)
         {
             return await _cartQuery.GetListCart(id);
         }
@@ -31,5 +31,15 @@ namespace PetShop.Service
 
             await _cartAction.CheckoutNoAcc(checkoutRequest);
         }
+        public async Task Checkout(CheckoutRequestDto checkoutRequest, string userId)
+        {
+            if (checkoutRequest == null)
+            {
+                throw new ArgumentNullException(nameof(checkoutRequest));
+            }
+
+            await _cartAction.Checkout(checkoutRequest, userId);
+        }
+
     }
 }

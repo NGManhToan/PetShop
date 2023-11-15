@@ -4,7 +4,9 @@ namespace PetShop.Service.Interface
 {
     public interface ICartService
     {
-        Task<List<CartViewModel>> GetListCart(int id);
+        Task<List<CartViewModelAcc>> GetListCart(int id);
         Task CheckoutNoAcc(CheckoutRequestDto checkoutRequest);
+
+        Task Checkout(CheckoutRequestDto checkoutRequest, string userId);
     }
 }

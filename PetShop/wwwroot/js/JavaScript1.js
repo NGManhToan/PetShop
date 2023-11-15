@@ -61,11 +61,11 @@ function updateQuantity(productId, change, price, productName, productImage, act
 
     if (action === 'increase') { // Use 'increase' as a string
         quantity += change; // Increase the quantity
-    } else if (action === 'decrease') { // Use 'decrease' as a string
+    } else if (action === 'decrease' && quantity > 1) { // Use 'decrease' as a string and ensure quantity is more than 1
         quantity += change; // Decrease the quantity
     }
 
-    if (quantity <= 1) {
+    if (quantity < 1) {
         // Show confirmation dialog
         var confirmDelete = window.confirm("Do you want to delete this product?");
         if (confirmDelete) {
@@ -83,6 +83,7 @@ function updateQuantity(productId, change, price, productName, productImage, act
 
     updateGrandTotal();
 }
+
 
 /* Hàm loại bỏ sản phẩm khỏi Local Storage*/
 function removeFromLocalStorage(productId) {
@@ -208,7 +209,26 @@ function validateForm() {
     return true;
 }
 
-document.getElementById("proceed-to-checkout").addEventListener("click", () => {
+async function checkUserAccount() {
+    // Gọi API để lấy userId
+    const response = await fetch('/api/Cart/idUser', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+    if (!response.ok) {
+        return null;
+    }
+
+    // Trả về userId
+    return await response.json();
+}
+
+
+
+
+document.getElementById("proceed-to-checkout").addEventListener("click", async () => {
     // Kiểm tra xem có sản phẩm được chọn không
     if (validateForm()) {
         // Check if there are selected products
@@ -217,7 +237,10 @@ document.getElementById("proceed-to-checkout").addEventListener("click", () => {
         } else {
             // Xử lý khi người dùng nhấn nút "Checkout"
             GetInforUser();
-            fetch('/api/Cart/noAccount', {
+            // Kiểm tra xem người dùng có tài khoản hay không
+            var userId = await checkUserAccount();
+            var url = userId ? '/api/Cart/Account' : '/api/Cart/noAccount';
+            fetch(url, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -230,14 +253,12 @@ document.getElementById("proceed-to-checkout").addEventListener("click", () => {
                 .then(response => {
                     if (response.ok) {
                         console.log("Đặt hàng thành công!");
-
-                        // Xóa các sản phẩm đã chọn từ local storage
-                        clearLocalStorage(selectedProducts);
-
-                        // Hiển thị thông báo thành công
+                        // Nếu người dùng không có tài khoản, xóa giỏ hàng
+                        if (!userId) {
+                            clearLocalStorage(selectedProducts);
+                        }
                         alert("Đặt hàng thành công!");
 
-                        // Tải lại trang
                         location.reload();
                     } else {
                         console.log("Đặt hàng thất bại.");
@@ -250,8 +271,55 @@ document.getElementById("proceed-to-checkout").addEventListener("click", () => {
                 });
         }
     }
-    // If form validation fails, it will halt the checkout process.
 });
+
+
+
+
+//document.getElementById("proceed-to-checkout").addEventListener("click", () => {
+//    // Kiểm tra xem có sản phẩm được chọn không
+//    if (validateForm()) {
+//        // Check if there are selected products
+//        if (selectedProducts.length === 0) {
+//            alert("Vui lòng chọn sản phẩm trước khi thanh toán.");
+//        } else {
+//            // Xử lý khi người dùng nhấn nút "Checkout"
+//            GetInforUser();
+//            fetch('/api/Cart/noAccount', {
+//                method: 'POST',
+//                headers: {
+//                    'Content-Type': 'application/json',
+//                },
+//                body: JSON.stringify({
+//                    CartItems: selectedProducts,
+//                    InfoUser: userInfo,
+//                }),
+//            })
+//                .then(response => {
+//                    if (response.ok) {
+//                        console.log("Đặt hàng thành công!");
+
+//                        // Xóa các sản phẩm đã chọn từ local storage
+//                        clearLocalStorage(selectedProducts);
+
+//                        // Hiển thị thông báo thành công
+//                        alert("Đặt hàng thành công!");
+
+//                        // Tải lại trang
+//                        location.reload();
+//                    } else {
+//                        console.log("Đặt hàng thất bại.");
+//                        // Hiển thị thông báo thất bại
+//                        alert("Đặt hàng thất bại.");
+//                    }
+//                })
+//                .catch(error => {
+//                    console.error(error.message);
+//                });
+//        }
+//    }
+//    // If form validation fails, it will halt the checkout process.
+//});
 
 
 // Add a function to clear selected products from local storage
@@ -273,3 +341,44 @@ function clearLocalStorage(productsToRemove) {
         alert("Local storage is not supported in this browser.");
     }
 }
+
+
+//document.getElementById("proceed-to-checkout").addEventListener("click", () => {
+//    // Kiểm tra xem có sản phẩm được chọn không
+//    if (validateForm()) {
+//        // Check if there are selected products
+//        if (selectedProducts.length === 0) {
+//            alert("Vui lòng chọn sản phẩm trước khi thanh toán.");
+//        } else {
+//            // Xử lý khi người dùng nhấn nút "Checkout"
+//            GetInforUser();
+//            fetch('/api/Cart/Account', {
+//                method: 'POST',
+//                headers: {
+//                    'Content-Type': 'application/json',
+//                },
+//                body: JSON.stringify({
+//                    CartItems: selectedProducts,
+//                    InfoUser: userInfo,
+//                }),
+//            })
+//                .then(response => {
+//                    if (response.ok) {
+//                        console.log("Đặt hàng thành công!");
+//                        // Hiển thị thông báo thành công
+//                        alert("Đặt hàng thành công!");
+
+//                        // Tải lại trang
+//                        location.reload();
+//                    } else {
+//                        console.log("Đặt hàng thất bại.");
+//                        // Hiển thị thông báo thất bại
+//                        alert("Đặt hàng thất bại.");
+//                    }
+//                })
+//                .catch(error => {
+//                    console.error(error.message);
+//                });
+//        }
+//    }
+//});

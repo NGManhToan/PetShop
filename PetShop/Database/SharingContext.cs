@@ -337,7 +337,7 @@ namespace PetShop.Database
                 entity.HasOne(d => d.CartDetail)
                     .WithMany(p => p.TblOrders)
                     .HasForeignKey(d => d.CartDetailId)
-                    .HasConstraintName("FK_Order_Cart_Detail_Id");
+                    .HasConstraintName("FK_Order_DetailCart");
 
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.TblOrders)
@@ -352,11 +352,11 @@ namespace PetShop.Database
 
                 entity.ToTable("tbl_order_detail");
 
-                entity.HasIndex(e => e.OrderId, "FK_OrderDetail_OrderId");
-
                 entity.HasIndex(e => e.PetId, "FK_OrderDetail_PetId");
 
                 entity.HasIndex(e => e.ProductId, "FK_OrderDetail_ProductId");
+
+                entity.HasIndex(e => e.OrderId, "Fk_OrderDetail_Order");
 
                 entity.Property(e => e.OrderDetailId).HasColumnName("order_detail_id");
 
@@ -379,6 +379,11 @@ namespace PetShop.Database
                 entity.Property(e => e.ProductId).HasColumnName("product_id");
 
                 entity.Property(e => e.Quantity).HasColumnName("quantity");
+
+                entity.HasOne(d => d.Order)
+                    .WithMany(p => p.TblOrderDetails)
+                    .HasForeignKey(d => d.OrderId)
+                    .HasConstraintName("Fk_OrderDetail_Order");
 
                 entity.HasOne(d => d.Pet)
                     .WithMany(p => p.TblOrderDetails)

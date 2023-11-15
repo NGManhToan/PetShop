@@ -22,7 +22,19 @@ namespace PetShop.Controllers
         }
 
 
-		[HttpGet("cart")]
+        [HttpGet("idUser")]
+        public IActionResult GetUserId()
+        {
+            var userId = HttpContext.Session.GetString("UserId");
+            if (userId == null)
+            {
+                return NotFound("Không tìm thấy userId trong phiên.");
+            }
+            return Ok(userId);
+        }
+
+
+        [HttpGet("cart")]
         public async Task<IActionResult> Cart()
         {
             // Retrieve user ID from the current user's claims
@@ -53,6 +65,25 @@ namespace PetShop.Controllers
             }
         }
 
+        [HttpPost("Account")]
+        public async Task<IActionResult> Checkout([FromBody] CheckoutRequestDto checkoutRequest)
+        {
+            var userId = HttpContext.Session.GetString("UserId");
+            if (checkoutRequest == null)
+            {
+                return BadRequest("Yêu cầu không hợp lệ.");
+            }
+
+            try
+            {
+                await _cartService.Checkout(checkoutRequest, userId);
+                return Ok("Dữ liệu giỏ hàng đã được lưu.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Không thể lưu dữ liệu giỏ hàng vào cơ sở dữ liệu: " + ex.Message);
+            }
+        }
 
     }
 }

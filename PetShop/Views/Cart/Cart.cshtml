@@ -1,4 +1,4 @@
-﻿@model List<PetShop.Models.Cart.CartViewModel>
+﻿@model List<PetShop.Models.Cart.CartViewModelAcc>
 @{
     ViewBag.Title = "Cart";
 }
@@ -37,9 +37,65 @@
                                     <th scope="col">Total</th>
                                 </tr>
                             </thead>
-                            <tbody id="cartItemsDisplay">
-                                <!-- This is where the cart items will be dynamically added -->
-                            </tbody>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <tbody>
+                                    @foreach (var cartItem in Model)
+                                    {
+                                        var product = cartItem;
+                                        if (product != null)
+                                        {
+                                            var total = product.Price * cartItem.Quantity;
+                                            <tr>
+                                                <td>
+                                                    <div>
+                                                        <input type="checkbox" id="select-@product.IdProduct" onclick="updateGrandTotal()">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex" >
+                                                        <img src="@product.Image" alt="" id="image-@product.IdProduct">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="media">
+                                                        <div class="media-body" id="name-@product.IdProduct">
+                                                            <p>@product.Name</p>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <h5>@product.Price.ToString("C")</h5>
+                                                </td>
+                                                <td>
+                                                    <div class="product_count">
+                                                        <input type="text" name="qty" id="quantity-@product.IdProduct" maxlength="12"
+                                                               value="@cartItem.Quantity" title="Quantity:" class="input-text qty">
+                                                        <button onclick="updateQuantity(@product.IdProduct, 1, @product.Price,@product.Name,@product.Image,'increase');updateGrandTotal()"
+                                                                class="increase items-count" type="button">
+                                                            <i class="lnr lnr-chevron-up"></i>
+                                                        </button>
+                                                        <button onclick="updateQuantity(@product.IdProduct, -1, @product.Price,@product.Name,@product.Image,'decrease');updateGrandTotal()"
+                                                                class="reduced items-count" type="button">
+                                                            <i class="lnr lnr-chevron-down"></i>
+                                                        </button>
+                                                    </div>
+
+                                                </td>
+                                                <td id="total-@product.IdProduct">
+                                                    <h5>@total.ToString("C")</h5>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            }
+                            else
+                            {
+                                <tbody id="cartItemsDisplay">
+                                    <!-- This is where the cart items will be dynamically added -->
+                                </tbody>
+                            }
                         </table>
 
                     </div>

@@ -4,7 +4,7 @@ namespace PetShop.Query.Interface
 {
     public interface ICartQuery
     {
-        Task<List<CartViewModel>> GetListCart(int id);
+        Task<List<CartViewModelAcc>> GetListCart(int id);
 
     }
 }

@@ -7,6 +7,7 @@ namespace PetShop.Action.Interface
     public interface ICartAction
     {
         Task CheckoutNoAcc(CheckoutRequestDto checkoutRequest);
+        Task Checkout(CheckoutRequestDto checkoutRequest, string userId);
 
     }
 }

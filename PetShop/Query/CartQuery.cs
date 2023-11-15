@@ -13,16 +13,16 @@ namespace PetShop.Query
             _sharingDapper = sharingDapper;
         }
 
-        public async Task<List<CartViewModel>> GetListCart(int id)
+        public async Task<List<CartViewModelAcc>> GetListCart(int id)
         {
-            var query = @"Select cd.Image,cd.Name,cd.quanlity as Quantity,cd.total as Price
+            var query = @"Select cd.Image,cd.Name,cd.quanlity as Quantity,cd.total as Price, cd.product_id as IdProduct
 							from tbl_cart c
 							join tbl_user u on u.user_id = c.user_id
 							join tbl_cart_detail cd on cd.cart_id = c.cart_id
 							WHERE
-								 c.user_id = @id";
+								 c.user_id = @id and c.IsActive = 1 and c.IsDeleted = 0";
 
-            var cart = await _sharingDapper.QueryAsync<CartViewModel>(query, new
+            var cart = await _sharingDapper.QueryAsync<CartViewModelAcc>(query, new
             {
                 id = id
             });

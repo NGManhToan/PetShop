@@ -30,7 +30,4 @@ function addToLocalStorage(productId, productName, productPrice, productImage, q
         alert("Local storage is not supported in this browser.");
     }
 }
-// Function to add an item to local storage
 
-
-// Function to retrieve cart items from local storage
