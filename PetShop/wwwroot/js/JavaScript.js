@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    $(".add-to-cart").click(function (e) {
+    $(".add-to-cart").off('click').on('click', function (e) {
         e.preventDefault();
 
         var productId = $(this).data('product-id').toString();
@@ -26,8 +26,25 @@ function addToLocalStorage(productId, productName, productPrice, productImage, q
         }
 
         localStorage.setItem("cartItems", JSON.stringify(cartItems));
+        updateCartItemCoun2();
     } else {
         alert("Local storage is not supported in this browser.");
     }
 }
 
+function updateCartItemCoun2() {
+    function getCartItemsFromLocalStorage() {
+        if (typeof (Storage) !== "undefined") {
+            var cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+            return cartItems;
+        } else {
+            alert("Local storage is not supported in this browser.");
+            return [];
+        }
+    }
+    var cartItems = getCartItemsFromLocalStorage();
+    var cartItemCount = document.getElementById("cartItemCount");
+    if (cartItemCount) {
+        cartItemCount.textContent = cartItems.length;
+    }
+}
