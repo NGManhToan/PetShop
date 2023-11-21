@@ -67,12 +67,12 @@
 					{
 						<div class="col-lg-4 col-md-6">
 							<div class="single-product">
-								<img class="img-fluid" src="~/img/product/p3.jpg" alt="">
-								<div class="product-details">
+								<img class="img-fluid" src="~/img/product/p3.jpg" alt="" id="product_image">
+								<div class="product-details" id="name-of-product">
 									<h6>
 										@pet.PetName
 									</h6>
-									<div class="price">
+									<div class="price" id="product-price">
 										<h6>@pet.PetPrice</h6>
 
 									</div>
@@ -80,25 +80,6 @@
 
 										@if (User.Identity.IsAuthenticated)
 										{
-											<a href="" class="social-info">
-												<span class="ti-bag"></span>
-												<p class="hover-text">add to bag</p>
-											</a>
-											<a href="" class="social-info">
-												<span class="lnr lnr-heart"></span>
-												<p class="hover-text">Wishlist</p>
-											</a>
-											<a href="" class="social-info">
-												<span class="lnr lnr-sync"></span>
-												<p class="hover-text">compare</p>
-											</a>
-											@*<a href="@Url.Action("DetailItem", "Product", new { productId = product.Id })" class="social-info">
-												<span class="lnr lnr-move"></span>
-												<p class="hover-text">view more</p>
-											</a>*@
-										}
-										else
-										{
 											<a href="@Url.Action("Login", "Login", new { returnUrl = Context.Request.Path + Context.Request.QueryString })" class="social-info">
 												<span class="ti-bag"></span>
 												<p class="hover-text">add to bag</p>
@@ -116,6 +97,26 @@
 												<p class="hover-text">view more</p>
 											</a>
 
+										}
+										else
+										{
+											<a href="#" class="social-info add-to-cart" data-product-id="@pet.Id" data-product-name="@pet.PetName" data-product_image="@pet.PetImage" data-product-price="@pet.PetPrice">
+												<span class="ti-bag"></span>
+												<p class="hover-text">add to bag</p>
+											</a>
+
+											<a href="" class="social-info">
+												<span class="lnr lnr-heart"></span>
+												<p class="hover-text">Wishlist</p>
+											</a>
+											<a href="" class="social-info">
+												<span class="lnr lnr-sync"></span>
+												<p class="hover-text">compare</p>
+											</a>
+											<a href="@Url.Action("DetailItem", "Product", new { pet = pet.Id })" class="social-info">
+												<span class="lnr lnr-move"></span>
+												<p class="hover-text">view more</p>
+											</a>
 										}
 									</div>
 								</div>

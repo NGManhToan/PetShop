@@ -15,6 +15,7 @@ namespace PetShop.Query
         public async Task<List<PetListModel>> ListPet(int pageNumber, int pageSize)
         {
             var query = @"SELECT 
+                                pe.pet_id as ID,
 								pe.pet_name AS PetName,
 								pe.pet_price AS PetPrice,
 								pe.pet_images AS PetImage
