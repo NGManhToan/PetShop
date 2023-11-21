@@ -41,5 +41,14 @@ namespace PetShop.Service
             await _cartAction.Checkout(checkoutRequest, userId);
         }
 
+        public async Task<CountItemModel> CountSLSP(string id)
+        {
+            var countItem = await _cartQuery.CountSLSP(id);
+            if (countItem == null)
+            {
+                return null;
+            }
+            return countItem;
+        }
     }
 }

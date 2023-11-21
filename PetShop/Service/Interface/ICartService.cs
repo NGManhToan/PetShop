@@ -8,5 +8,6 @@ namespace PetShop.Service.Interface
         Task CheckoutNoAcc(CheckoutRequestDto checkoutRequest);
 
         Task Checkout(CheckoutRequestDto checkoutRequest, string userId);
+        Task<CountItemModel> CountSLSP(string id);
     }
 }

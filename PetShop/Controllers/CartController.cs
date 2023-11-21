@@ -28,7 +28,7 @@ namespace PetShop.Controllers
             var userId = HttpContext.Session.GetString("UserId");
             if (userId == null)
             {
-                return NotFound("Không tìm thấy userId trong phiên.");
+                return null;
             }
             return Ok(userId);
         }
@@ -83,6 +83,18 @@ namespace PetShop.Controllers
             {
                 return StatusCode(500, "Không thể lưu dữ liệu giỏ hàng vào cơ sở dữ liệu: " + ex.Message);
             }
+        }
+
+        [HttpGet("CountItem")]
+        public async Task<IActionResult> CountItem()
+        {
+            var userId = HttpContext.Session.GetString("UserId");
+            if (userId == null)
+            {
+                return BadRequest();
+            }
+            var countItem = await _cartService.CountSLSP(userId);
+            return Ok(countItem);
         }
 
     }

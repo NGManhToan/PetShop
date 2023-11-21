@@ -28,5 +28,17 @@ namespace PetShop.Query
             });
             return cart;
         }
+
+        public async Task<CountItemModel>CountSLSP(string id)
+        {
+            var query = @"Select count(cart_id) SLSP
+                            from tbl_cart c
+                            where c.user_id = @id and c.IsActive = 1 AND c.IsDeleted = 0";
+            var count = await _sharingDapper.QuerySingleAsync<CountItemModel>(query, new
+            {
+                id = id
+            });
+            return count;
+        }
     }
 }

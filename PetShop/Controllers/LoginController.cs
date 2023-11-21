@@ -19,14 +19,16 @@ namespace PetShop.Controllers
         }
 
 
-		[HttpGet("logout")]
-		public async Task<IActionResult> Logout()
+        [HttpGet("logout")]
+        public async Task<IActionResult> Logout()
         {
+            HttpContext.Session.Remove("UserId");
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Index", "Home");
         }
 
-		[HttpGet("login")]
+
+        [HttpGet("login")]
 		public IActionResult Login(string? returnUrl)
         {
             if (returnUrl != null)

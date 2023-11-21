@@ -32,19 +32,60 @@ function addToLocalStorage(productId, productName, productPrice, productImage, q
     }
 }
 
-function updateCartItemCoun2() {
-    function getCartItemsFromLocalStorage() {
+async function checkUserAccount() {
+    // Gọi API để lấy userId
+    const response = await fetch('/api/Cart/idUser', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+    if (!response.ok) {
+        return null;
+    }
+
+    // Trả về userId
+    return await response.json();
+}
+
+async function updateCartItemCoun2() {
+    var userId = await checkUserAccount();
+    var cartItemCount;
+
+    if (userId) {
+        // Nếu có userId, gọi API để lấy số lượng từ data
+        const response = await fetch('/api/Cart/CountItem', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        if (response.ok) {
+            const data = await response.json();
+            console.log(data);  // In ra giá trị trả về
+            cartItemCount = data.slsp; 
+        } else {
+            alert("Failed to get cart items from server.");
+            return;
+        }
+    } else {
+        // Nếu không có userId, lấy số lượng từ local storage
         if (typeof (Storage) !== "undefined") {
             var cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-            return cartItems;
+            cartItemCount = cartItems.length;
         } else {
             alert("Local storage is not supported in this browser.");
-            return [];
+            return;
         }
     }
-    var cartItems = getCartItemsFromLocalStorage();
-    var cartItemCount = document.getElementById("cartItemCount");
-    if (cartItemCount) {
-        cartItemCount.textContent = cartItems.length;
+
+    var cartItemCountElement = document.getElementById("cartItemCount");
+    if (cartItemCountElement) {
+        cartItemCountElement.textContent = cartItemCount;
     }
 }
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    updateCartItemCoun2();
+});
