@@ -7,6 +7,7 @@ namespace PetShop.Database.SharingModels
     {
         public TblPet()
         {
+            TblMedia = new HashSet<TblMedium>();
             TblOrderDetails = new HashSet<TblOrderDetail>();
         }
 
@@ -14,7 +15,6 @@ namespace PetShop.Database.SharingModels
         public string PetName { get; set; } = null!;
         public int PetCategoryId { get; set; }
         public int VendorId { get; set; }
-        public string? PetImages { get; set; }
         public short? PetStatus { get; set; }
         public int? CreatedBy { get; set; }
         public ulong? IsDeleted { get; set; }
@@ -22,10 +22,13 @@ namespace PetShop.Database.SharingModels
         public DateTime? CreatedDate { get; set; }
         public DateTime? LastModifiedDate { get; set; }
         public int? LastModifiedBy { get; set; }
-        public decimal? PetPrice { get; set; }
+        public decimal PetPrice { get; set; }
+        public string? PetAge { get; set; }
+        public string? PetSex { get; set; }
 
         public virtual TblPetCategory PetCategory { get; set; } = null!;
         public virtual TblVendor Vendor { get; set; } = null!;
+        public virtual ICollection<TblMedium> TblMedia { get; set; }
         public virtual ICollection<TblOrderDetail> TblOrderDetails { get; set; }
     }
 }

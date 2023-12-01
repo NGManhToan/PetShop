@@ -106,23 +106,32 @@
 								</ul>
 							</li>
 
-
-							@if (User.Identity.IsAuthenticated)
-							{
-								<li class="nav-item">
-									<a class="nav-link" href="@Url.Action("Logout", "Login")">Logout</a>
-								</li>
-							}
-							else
-							{
-								<li class="nav-item">
-									<a class="nav-link"
-									   href="@Url.Action("Login", "Login", new { returnUrl = Context.Request.Path + Context.Request.QueryString })">Login</a>
-								</li>
-							}
-
-
 							<li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+
+							<li class="nav-item submenu dropdown">
+								<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
+								   aria-haspopup="true" aria-expanded="false">Account</a>
+								<ul class="dropdown-menu">
+									@if (User.Identity.IsAuthenticated)
+									{
+										<li class="nav-item">
+											<a class="nav-link" href="@Url.Action("Logout", "Login")">Logout</a>
+										</li>
+									}
+									else
+									{
+										<li class="nav-item">
+											<a class="nav-link"
+											   href="@Url.Action("Login", "Login", new { returnUrl = Context.Request.Path + Context.Request.QueryString })">Login</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link"
+											   href="@Url.Action("Register", "Register")">Register</a>
+										</li>
+
+									}
+								</ul>
+							</li>
 						</ul>
 						<ul class="nav navbar-nav navbar-right">
 							<li class="nav-item">
@@ -147,13 +156,14 @@
 		</div>
 		<div class="search_input" id="search_input_box">
 			<div class="container">
-				<form class="d-flex justify-content-between">
-					<input type="text" class="form-control" id="search_input" placeholder="Search Here">
-					<button type="submit" class="btn"></button>
+				<form asp-controller="Home" asp-action="Search" method="get" class="d-flex justify-content-between">
+					<input type="text" class="form-control" id="search_input" placeholder="Search Here" name="SearchString" value="@ViewData["CurrentFilter"]">
+					<input type="submit" class="btn btn-primary" value="Search">
 					<span class="lnr lnr-cross" id="close_search" title="Close Search"></span>
 				</form>
 			</div>
 		</div>
+
 	</header>
 	<!-- End Header Area -->
 	@RenderBody()
@@ -234,18 +244,6 @@
 					</div>
 				</div>
 			</div>
-			<div class="footer-bottom d-flex justify-content-center align-items-center flex-wrap">
-				<p class="footer-text m-0">
-					<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-					Copyright &copy;
-					<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is
-					made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com"
-																	  target="_blank">Colorlib</a>
-					<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-				</p>
-			</div>
-
-
 		</div>
 	</footer>
 	<!-- End footer Area -->

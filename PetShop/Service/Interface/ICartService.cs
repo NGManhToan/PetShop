@@ -9,5 +9,7 @@ namespace PetShop.Service.Interface
 
         Task Checkout(CheckoutRequestDto checkoutRequest, string userId);
         Task<CountItemModel> CountSLSP(string id);
+
+        Task<List<OrderedCart>> GetListHistoryProduct(string id);
     }
 }

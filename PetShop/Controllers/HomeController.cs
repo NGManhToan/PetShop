@@ -4,6 +4,7 @@ using PetShop.Models.PageList;
 using PetShop.Models.Product;
 using PetShop.Service.Interface;
 using System.Diagnostics;
+using System.Text.Json;
 
 namespace PetShop.Controllers
 {
@@ -22,16 +23,37 @@ namespace PetShop.Controllers
         public async Task<IActionResult> Index(int pageNumber = 1, int pageSize = 10)
         {
             var products = await _productService.ListProduct(pageNumber, pageSize);
-            var model = new PagedListModel<ListProductModel>
+
+			var model = new PagedListModel<ListProductModel>
             {
                 CurrentPage = pageNumber,
                 TotalPages = (int)Math.Ceiling(products.Count / (double)pageSize),
-                Items = products
-            };
+                Items = products,
+
+			};
             return View(model);
         }
 
-        public IActionResult Privacy()
+		public async Task<IActionResult> Search(string searchString)
+		{
+			var productList = await _productService.ListProduct(1, 10); // Assuming an async method
+			ViewData["CurrentFilter"] = searchString;
+
+			if (!String.IsNullOrEmpty(searchString))
+			{
+				searchString = searchString.Trim().ToLower(); // Trim and convert to lower case
+				var filteredProducts = productList.Where(x => x.ProductName.ToLower().Contains(searchString)).ToList();
+				var json = JsonSerializer.Serialize(filteredProducts);
+				TempData["FilteredProducts"] = json; // Store the filtered products in TempData
+				return RedirectToAction("ListProduct", "Product"); // Redirect to the Product action
+			}
+
+			return Ok(productList); // Return the original list if no search string is provided
+		}
+
+
+
+		public IActionResult Privacy()
         {
             return View();
         }
@@ -41,5 +63,8 @@ namespace PetShop.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+
+
     }
 }

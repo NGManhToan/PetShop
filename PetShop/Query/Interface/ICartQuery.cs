@@ -7,5 +7,7 @@ namespace PetShop.Query.Interface
         Task<List<CartViewModelAcc>> GetListCart(int id);
         Task<CountItemModel> CountSLSP(string id);
 
+        Task<List<OrderedCart>> GetListHistoryProduct(string id);
+
     }
 }

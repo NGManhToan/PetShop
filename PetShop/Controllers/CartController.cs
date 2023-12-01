@@ -97,5 +97,17 @@ namespace PetShop.Controllers
             return Ok(countItem);
         }
 
+        [HttpGet("HistoryProduct")]
+        public async Task<IActionResult> HistoryProduct()
+        {
+            var userId = HttpContext.Session.GetString("UserId");
+            if(userId == null)
+            {
+                return BadRequest();
+            }
+            var historyProduct = await _cartService.GetListHistoryProduct(userId);
+            return Ok(historyProduct);
+        }
+
     }
 }

@@ -23,6 +23,8 @@ namespace PetShop.Database.SharingModels
         public DateTime? LastModifiedDate { get; set; }
         public int? LastModifiedBy { get; set; }
         public int? CartDetailId { get; set; }
+        public string? OrderImg { get; set; }
+        public string? OrderItemname { get; set; }
 
         public virtual TblCartDetail? CartDetail { get; set; }
         public virtual TblCustomer? Customer { get; set; }

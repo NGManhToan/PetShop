@@ -40,5 +40,18 @@ namespace PetShop.Query
             });
             return count;
         }
+
+        public async Task<List<OrderedCart>>GetListHistoryProduct(string id)
+        {
+            var query = @"select od.order_img as Image,od.order_itemname as Name,od.total_amount as Price,odt.quantity as Quantity,od.order_status as Satus
+                            from tbl_order od
+	                            join tbl_order_detail odt on od.order_id = odt.order_id
+                            where od.CreatedBy = @id  and od.IsActive = 1 AND od.IsDeleted = 0";
+            var historyProduct = await _sharingDapper.QueryAsync<OrderedCart>(query, new
+            {
+                id = id
+            });
+            return historyProduct;
+        }
     }
 }

@@ -23,6 +23,7 @@ namespace PetShop.Database
         public virtual DbSet<TblCart> TblCarts { get; set; } = null!;
         public virtual DbSet<TblCartDetail> TblCartDetails { get; set; } = null!;
         public virtual DbSet<TblCustomer> TblCustomers { get; set; } = null!;
+        public virtual DbSet<TblMedium> TblMedia { get; set; } = null!;
         public virtual DbSet<TblOrder> TblOrders { get; set; } = null!;
         public virtual DbSet<TblOrderDetail> TblOrderDetails { get; set; } = null!;
         public virtual DbSet<TblPet> TblPets { get; set; } = null!;
@@ -291,6 +292,46 @@ namespace PetShop.Database
                     .HasConstraintName("FK_Customer_UserId");
             });
 
+            modelBuilder.Entity<TblMedium>(entity =>
+            {
+                entity.HasKey(e => e.IdMedia)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("tbl_media");
+
+                entity.HasIndex(e => e.PetId, "FK_Media_pet_id_idx");
+
+                entity.HasIndex(e => e.ProductId, "FK_Media_product_id_idx");
+
+                entity.Property(e => e.IdMedia).HasColumnName("Id_media");
+
+                entity.Property(e => e.CreateDate)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.ImageMedia)
+                    .HasMaxLength(255)
+                    .HasColumnName("Image_media");
+
+                entity.Property(e => e.LastModifiedDate)
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                entity.Property(e => e.PetId).HasColumnName("pet_id");
+
+                entity.Property(e => e.ProductId).HasColumnName("product_id");
+
+                entity.HasOne(d => d.Pet)
+                    .WithMany(p => p.TblMedia)
+                    .HasForeignKey(d => d.PetId)
+                    .HasConstraintName("FK_Media_pet_id");
+
+                entity.HasOne(d => d.Product)
+                    .WithMany(p => p.TblMedia)
+                    .HasForeignKey(d => d.ProductId)
+                    .HasConstraintName("FK_Media_product_id");
+            });
+
             modelBuilder.Entity<TblOrder>(entity =>
             {
                 entity.HasKey(e => e.OrderId)
@@ -323,6 +364,14 @@ namespace PetShop.Database
                 entity.Property(e => e.OrderDate)
                     .HasColumnType("datetime")
                     .HasColumnName("order_date");
+
+                entity.Property(e => e.OrderImg)
+                    .HasMaxLength(255)
+                    .HasColumnName("order_img");
+
+                entity.Property(e => e.OrderItemname)
+                    .HasMaxLength(255)
+                    .HasColumnName("order_itemname");
 
                 entity.Property(e => e.OrderStatus)
                     .HasMaxLength(20)
@@ -421,11 +470,11 @@ namespace PetShop.Database
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
-                entity.Property(e => e.PetCategoryId).HasColumnName("pet_category_id");
+                entity.Property(e => e.PetAge)
+                    .HasMaxLength(45)
+                    .HasColumnName("pet_age");
 
-                entity.Property(e => e.PetImages)
-                    .HasColumnType("text")
-                    .HasColumnName("pet_images");
+                entity.Property(e => e.PetCategoryId).HasColumnName("pet_category_id");
 
                 entity.Property(e => e.PetName)
                     .HasMaxLength(50)
@@ -434,6 +483,10 @@ namespace PetShop.Database
                 entity.Property(e => e.PetPrice)
                     .HasPrecision(10, 2)
                     .HasColumnName("pet_price");
+
+                entity.Property(e => e.PetSex)
+                    .HasMaxLength(45)
+                    .HasColumnName("pet_sex");
 
                 entity.Property(e => e.PetStatus).HasColumnName("pet_status");
 
@@ -511,10 +564,6 @@ namespace PetShop.Database
                 entity.Property(e => e.ProductDescription)
                     .HasColumnType("text")
                     .HasColumnName("product_description");
-
-                entity.Property(e => e.ProductImageUrl)
-                    .HasMaxLength(255)
-                    .HasColumnName("product_image_url");
 
                 entity.Property(e => e.ProductName)
                     .HasMaxLength(255)

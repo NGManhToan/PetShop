@@ -2,6 +2,7 @@
 using PetShop.Models.PageList;
 using PetShop.Models.Product;
 using PetShop.Service.Interface;
+using System.Text.Json;
 
 namespace PetShop.Controllers
 {
@@ -18,29 +19,34 @@ namespace PetShop.Controllers
 
 		[HttpGet("list")]
 		public async Task<IActionResult> ListProduct(int pageNumber = 1, int pageSize = 15)
-        {
-            var products = await _productService.ListProduct(pageNumber, pageSize);
-            var categoryProduct = await _productService.ListCategoryProducts();
-            var totalProducts = await _productService.GetTotalProducts();
+		{
+			var json = TempData["FilteredProducts"] as string; // Retrieve the JSON string from TempData
+			var products = json != null ? JsonSerializer.Deserialize<List<ListProductModel>>(json) : null; if (products == null) // If no filtered products, get the full list
+			{
+				products = await _productService.ListProduct(pageNumber, pageSize);
+			}
+			var categoryProduct = await _productService.ListCategoryProducts();
+			var totalProducts = products.Count; // Use the count of the filtered or full product list
 
-            var model = new PagedListModel<ListProductModel>
-            {
-                CurrentPage = pageNumber,
-                TotalPages = (int)Math.Ceiling(totalProducts / (double)pageSize),
-                PageSize = pageSize,
-                TotalItems = totalProducts,
-                Items = products
-            };
+			var model = new PagedListModel<ListProductModel>
+			{
+				CurrentPage = pageNumber,
+				TotalPages = (int)Math.Ceiling(totalProducts / (double)pageSize),
+				PageSize = pageSize,
+				TotalItems = totalProducts,
+				Items = products
+			};
 
-            var viewModel = new AllListProduct
-            {
-                Products = products,
-                Categories = categoryProduct,
-                Pagination = model
-            };
+			var viewModel = new AllListProduct
+			{
+				Products = products,
+				Categories = categoryProduct,
+				Pagination = model
+			};
 
-            return View(viewModel);
-        }
+			return View(viewModel);
+		}
+
 
 		[HttpGet("category/{categoryId}")]
 		public async Task<IActionResult> FillterCategoryProduct(int categoryId, int pageNumber = 1, int pageSize = 15)
@@ -71,5 +77,7 @@ namespace PetShop.Controllers
             return View("DetailItem", result);
         }
 
-    }
+		
+
+	}
 }

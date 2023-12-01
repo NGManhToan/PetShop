@@ -27,9 +27,10 @@ namespace PetShop.Query
 						  p.product_id as Id,
                           p.product_name AS ProductName,
                           p.product_price AS ProductPrice,
-                          p.product_image_url AS ProductImageUrl,
+						  m.Image_media AS ProductImageUrl,
                           p.discount as Discount
                           FROM tbl_product p
+							join tbl_media m on m.product_id = p.product_id
                           WHERE p.IsActive = 1 AND p.IsDeleted = 0
                           ORDER BY p.product_name
                           LIMIT @PageSize OFFSET @Offset";

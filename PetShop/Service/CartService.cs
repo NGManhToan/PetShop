@@ -50,5 +50,15 @@ namespace PetShop.Service
             }
             return countItem;
         }
+
+        public async Task<List<OrderedCart>> GetListHistoryProduct(string id)
+        {
+            var historyProduct = await _cartQuery.GetListHistoryProduct(id);
+            if(historyProduct == null)
+            {
+                return null;
+            }
+            return historyProduct;
+        }
     }
 }

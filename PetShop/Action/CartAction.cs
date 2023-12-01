@@ -51,6 +51,8 @@ namespace PetShop.Action
 							IsActive = 1,
 							IsDeleted = 0,
 							LastModifiedBy = customer.CustomerId,
+							OrderItemname = item.Name,
+							OrderImg = item.Image,
 
 						};
 
@@ -92,16 +94,31 @@ namespace PetShop.Action
 			{
 				using (var transaction = _context.Database.BeginTransaction())
 				{
-					var customerId = await _context.TblCustomers
+					var userID = await _context.TblUsers
 						.Where(x => x.UserId == parseUserId)
-						.Select(x => x.CustomerId).FirstOrDefaultAsync();
+						.Select(x => x.UserId).FirstOrDefaultAsync();
 
-					var cartDetailId = await _context.TblCartDetails
-						.Select(x=> x.CartDetailId).FirstOrDefaultAsync();
 
-					var cartId = await _context.TblCarts
-						.Where(x=> x.UserId == parseUserId && x.IsDeleted == 0 & x.IsActive == 1)
+                    var cartId = await _context.TblCarts
+						.Where(x=> x.UserId == parseUserId && x.IsDeleted == 0 && x.IsActive == 1)
 						.Select(x=>x.CartId).ToListAsync();
+
+
+                    var cartDetailIds = await _context.TblCartDetails
+						 .Where(x => cartId.Contains(x.CartId)) // Check if CartId is in the list
+						 .Select(x => x.CartDetailId)
+						 .ToListAsync();
+
+
+                    var cartDetailInfo = await _context.TblCartDetails
+						.Where(x => cartDetailIds.Contains(x.CartDetailId))
+							.Select(x => new
+							{
+								Name = x.Name,
+								Image = x.Image
+							})
+							.FirstOrDefaultAsync();
+
 
                     var updateCarts = await _context.TblCarts
 						.Where(x => cartId.Contains(x.CartId))
@@ -111,16 +128,16 @@ namespace PetShop.Action
 						TblOrder tblOrder = new TblOrder
 						{
                             TotalAmount = item.Price,
-                            CustomerId =customerId,
 							OrderDate = Utils.DateNow(),
 							PhoneNumber = checkoutRequest.InfoUser.PhoneNumber,
                             OrderStatus = "Đang chờ xử lý",
                             IsActive = 1,
                             IsDeleted = 0,
-                            LastModifiedBy = customerId,
-							CartDetailId = cartDetailId,
-							CreatedBy = customerId,
-
+                            LastModifiedBy = userID,
+							CartDetailId = cartDetailIds.FirstOrDefault(),
+							CreatedBy = userID,
+                            OrderImg = cartDetailInfo.Image,
+							OrderItemname = cartDetailInfo.Name
                         };
 						_context.TblOrders.Add(tblOrder);
 						await _context.SaveChangesAsync();

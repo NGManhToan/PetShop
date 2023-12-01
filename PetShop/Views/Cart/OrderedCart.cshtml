@@ -1,0 +1,87 @@
+﻿@model List<PetShop.Models.Cart.CartViewModelAcc>
+@{
+    ViewBag.Title = "Cart";
+}
+<!-- Start Banner Area -->
+<section class="banner-area organic-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+            <div class="col-first">
+                <h1>Shopping Cart</h1>
+                <nav class="d-flex align-items-center">
+                    <a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
+                    <a href="category.html">Cart</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- End Banner Area -->
+<!--================Cart Area =================-->
+<section class="cart_area">
+    <div class="container">
+        <div class="cart_inner">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-8">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Image</th>
+                                    <th scope="col">Product</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Total</th>
+                                    <th scope="col">Status</th>
+                                </tr>
+                            </thead>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <tbody>
+                                    @foreach (var cartItem in Model)
+                                    {
+                                        var product = cartItem;
+                                        if (product != null)
+                                        {
+                                            var total = product.Price * cartItem.Quantity;
+                                            <tr>
+                                                <td>
+                                                    <div class="d-flex">
+                                                        <img src="@product.Image" alt="" id="image-@product.IdProduct">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="media">
+                                                        <div class="media-body" id="name-@product.IdProduct">
+                                                            <p>@product.Name</p>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <h5>@product.Price.ToString("C")</h5>
+                                                </td>
+                                                <td>
+                                                    
+
+                                                </td>
+                                                <td id="total-@product.IdProduct">
+                                                    <h5>@total.ToString("C")</h5>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            }
+
+                        </table>
+
+                    </div>
+                    <!-- Your Billing Details Section -->
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
