@@ -21,6 +21,7 @@ namespace PetShop.Database.SharingModels
         public DateTime? LastModifiedDate { get; set; }
         public int? LastModifiedBy { get; set; }
         public string PhoneNumber { get; set; } = null!;
+        public string? Email { get; set; }
 
         public virtual TblUser? User { get; set; }
         public virtual ICollection<TblOrder> TblOrders { get; set; }

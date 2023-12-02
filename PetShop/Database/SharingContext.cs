@@ -257,8 +257,7 @@ namespace PetShop.Database
 
                 entity.ToTable("tbl_customer");
 
-                entity.HasIndex(e => e.UserId, "user_id")
-                    .IsUnique();
+                entity.HasIndex(e => e.UserId, "FK_User_Id_tbl_user_id_idx");
 
                 entity.Property(e => e.CustomerId).HasColumnName("customer_id");
 
@@ -274,6 +273,8 @@ namespace PetShop.Database
                     .HasMaxLength(255)
                     .HasColumnName("customer_name");
 
+                entity.Property(e => e.Email).HasMaxLength(45);
+
                 entity.Property(e => e.IsActive).HasColumnType("bit(1)");
 
                 entity.Property(e => e.IsDeleted).HasColumnType("bit(1)");
@@ -287,9 +288,9 @@ namespace PetShop.Database
                 entity.Property(e => e.UserId).HasColumnName("user_id");
 
                 entity.HasOne(d => d.User)
-                    .WithOne(p => p.TblCustomer)
-                    .HasForeignKey<TblCustomer>(d => d.UserId)
-                    .HasConstraintName("FK_Customer_UserId");
+                    .WithMany(p => p.TblCustomers)
+                    .HasForeignKey(d => d.UserId)
+                    .HasConstraintName("FK_User_Id_tbl_user_id");
             });
 
             modelBuilder.Entity<TblMedium>(entity =>
@@ -664,6 +665,22 @@ namespace PetShop.Database
 
                 entity.Property(e => e.UserId).HasColumnName("user_id");
 
+                entity.Property(e => e.Address)
+                    .HasMaxLength(45)
+                    .HasColumnName("address");
+
+                entity.Property(e => e.Avatar)
+                    .HasMaxLength(255)
+                    .HasColumnName("avatar");
+
+                entity.Property(e => e.Birthday)
+                    .HasColumnType("datetime")
+                    .HasColumnName("birthday");
+
+                entity.Property(e => e.Country)
+                    .HasMaxLength(45)
+                    .HasColumnName("country");
+
                 entity.Property(e => e.CreatedDate)
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("CURRENT_TIMESTAMP");
@@ -676,6 +693,10 @@ namespace PetShop.Database
                     .HasMaxLength(255)
                     .UseCollation("utf8_general_ci")
                     .HasCharSet("utf8");
+
+                entity.Property(e => e.Gender)
+                    .HasMaxLength(45)
+                    .HasColumnName("gender");
 
                 entity.Property(e => e.IsActive)
                     .HasColumnType("bit(1)")
@@ -692,6 +713,8 @@ namespace PetShop.Database
                 entity.Property(e => e.Password)
                     .HasMaxLength(255)
                     .HasColumnName("password");
+
+                entity.Property(e => e.Phone).HasColumnType("text");
 
                 entity.Property(e => e.RoleId).HasColumnName("role_id");
 
