@@ -98,7 +98,7 @@ namespace PetShop.Controllers
         }
 
         [HttpGet("HistoryProduct")]
-        public async Task<IActionResult> HistoryProduct()
+        public async Task<IActionResult> OrderedCart()
         {
             var userId = HttpContext.Session.GetString("UserId");
             if(userId == null)
@@ -106,7 +106,7 @@ namespace PetShop.Controllers
                 return BadRequest();
             }
             var historyProduct = await _cartService.GetListHistoryProduct(userId);
-            return Ok(historyProduct);
+            return View(historyProduct);
         }
 
     }

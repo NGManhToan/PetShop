@@ -1,4 +1,4 @@
-﻿@model List<PetShop.Models.Cart.CartViewModelAcc>
+﻿@model List<PetShop.Models.Cart.OrderedCart>
 @{
     ViewBag.Title = "Cart";
 }
@@ -25,16 +25,16 @@
             <div class="container">
                 <div class="row">
 
-                    <div class="col-lg-8">
+                    <div class="col-lg-12">
                         <table class="table">
                             <thead>
                                 <tr>
                                     <th scope="col">Image</th>
                                     <th scope="col">Product</th>
-                                    <th scope="col">Price</th>
-                                    <th scope="col">Quantity</th>
                                     <th scope="col">Total</th>
+                                    <th scope="col">Quantity</th>
                                     <th scope="col">Status</th>
+                                    <th scope="col">Actions</th>
                                 </tr>
                             </thead>
                             @if (User.Identity.IsAuthenticated)
@@ -49,7 +49,7 @@
                                             <tr>
                                                 <td>
                                                     <div class="d-flex">
-                                                        <img src="@product.Image" alt="" id="image-@product.IdProduct">
+                                                        <img class="img-fluid" src="@product.Image" alt="" id="image-@product.IdProduct" style="width:50%">
                                                     </div>
                                                 </td>
                                                 <td>
@@ -63,11 +63,16 @@
                                                     <h5>@product.Price.ToString("C")</h5>
                                                 </td>
                                                 <td>
-                                                    
-
+                                                    <h5>@product.Quantity</h5>
                                                 </td>
-                                                <td id="total-@product.IdProduct">
-                                                    <h5>@total.ToString("C")</h5>
+                                                <td>
+                                                    <span class="badge badge-success">@product.Status</span>
+                                                </td>
+                                                <td>
+                                                    @if (cartItem.Status == "Đang chờ xử lý")
+                                                    {
+                                                        <button class="btn btn-danger" onclick="cancelItem(@product.IdProduct)">Cancel</button>
+                                                    }
                                                 </td>
                                             </tr>
                                         }
