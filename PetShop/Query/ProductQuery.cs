@@ -72,12 +72,13 @@ namespace PetShop.Query
 								p.product_name AS ProductName,
 								p.product_description AS DescriptionProduct,
 								p.product_price as Price,
-								p.product_image_url as Image,
+								m.Image_media AS ProductImageUrl,
 								pc.category_name as CategoryName
 							FROM
 								tbl_product p
 									JOIN
 								tbl_product_category pc ON pc.category_id = p.category_id
+                                    join tbl_media m on m.product_id = p.product_id
 							WHERE
 								p.IsDeleted = 0 AND p.IsActive = 1
 									AND p.product_id = @productId";
