@@ -53,10 +53,11 @@ namespace PetShop.Query
             var query = @"SELECT
                           p.product_name AS ProductName,
                           p.product_price AS ProductPrice,
-                          p.product_image_url AS ProductImageUrl,
+                          m.Image_media AS ProductImageUrl,
                           p.discount as Discount 
                           FROM tbl_product p
-                          WHERE p.IsActive = 1 AND p.IsDeleted = 0 AND p.category_id = @CategoryId
+                          join tbl_media m on m.product_id = p.product_id
+                          WHERE p.IsActive = 1 AND p.IsDeleted = 0 AND p.category_id = @categoryId
                           ORDER BY p.product_name
                           LIMIT @PageSize OFFSET @Offset";
 

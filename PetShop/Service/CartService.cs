@@ -60,5 +60,10 @@ namespace PetShop.Service
             }
             return historyProduct;
         }
+
+        public async Task CancelItem(OrderedCart orderedCart, string userId)
+        {
+            await _cartAction.CancelItem(orderedCart,userId);
+        }
     }
 }

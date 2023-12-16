@@ -109,5 +109,16 @@ namespace PetShop.Controllers
             return View(historyProduct);
         }
 
+        [HttpPost("CancelItem")]
+        public async Task<IActionResult> CancelItem(OrderedCart orderedCart)
+        {
+            var userId = HttpContext.Session.GetString("UserId");
+            if (userId == null)
+            {
+                return BadRequest();
+            }
+            await _cartService.CancelItem(orderedCart, userId);
+            return Ok();
+        }
     }
 }

@@ -188,6 +188,30 @@ namespace PetShop.Action
 			}
 		}
 
-	}
+        public async Task CancelItem(OrderedCart orderedCart ,string userId)
+        {
+            if (string.IsNullOrEmpty(userId))
+            {
+                throw new ArgumentNullException(nameof(userId));
+            }
+
+            int parseUserId = int.Parse(userId);
+
+            var itemOrder = await _context.TblOrderDetails
+                .Where(x => x.CreatedBy == parseUserId && x.OrderId == orderedCart.Id )
+                .FirstOrDefaultAsync();
+
+			var order = await _context.TblOrders.Where(x => x.OrderId == itemOrder.OrderId).FirstOrDefaultAsync();
+			if (itemOrder != null)
+			{
+				order.OrderStatus = "Cancel";
+				
+			}
+            await _context.SaveChangesAsync();
+        }
+
+
+
+    }
 
 }

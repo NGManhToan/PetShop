@@ -11,5 +11,7 @@ namespace PetShop.Service.Interface
         Task<CountItemModel> CountSLSP(string id);
 
         Task<List<OrderedCart>> GetListHistoryProduct(string id);
+
+        Task CancelItem(OrderedCart orderedCart, string userId);
     }
 }

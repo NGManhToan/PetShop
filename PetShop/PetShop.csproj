@@ -7,6 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\js\cancel.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\js\cancel.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="axios" Version="0.16.2" />
     <PackageReference Include="Dapper" Version="2.1.4" />
     <PackageReference Include="jQuery" Version="3.7.1" />
@@ -38,6 +46,10 @@
 
   <ItemGroup>
     <Folder Include="Database\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\js\cancel.js" />
   </ItemGroup>
 
 </Project>

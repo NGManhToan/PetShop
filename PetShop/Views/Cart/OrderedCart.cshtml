@@ -71,7 +71,12 @@
                                                 <td>
                                                     @if (cartItem.Status == "Đang chờ xử lý")
                                                     {
-                                                        <button class="btn btn-danger" onclick="cancelItem(@product.IdProduct)">Cancel</button>
+                                                        <button class="btn btn-danger"
+                                                                onclick='cancelItem("@product.Id","@product.Name","@product.Image",
+                                                                     "@product.Price","@product.Quantity","@product.Status")'>
+                                                            Cancel
+                                                        </button>
+
                                                     }
                                                 </td>
                                             </tr>
@@ -90,3 +95,4 @@
         </div>
     </div>
 </section>
+<script src="~/js/cancel.js"></script>

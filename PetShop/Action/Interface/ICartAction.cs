@@ -9,5 +9,7 @@ namespace PetShop.Action.Interface
         Task CheckoutNoAcc(CheckoutRequestDto checkoutRequest);
         Task Checkout(CheckoutRequestDto checkoutRequest, string userId);
 
+        Task CancelItem(OrderedCart orderedCart, string userId);
+
     }
 }
