@@ -1,5 +1,6 @@
 ﻿using PetShop.Action.Interface;
 using PetShop.Database.SharingModels;
+using PetShop.Models.Login;
 using PetShop.Models.Register;
 using PetShop.Service.Interface;
 
@@ -17,6 +18,11 @@ namespace PetShop.Service
         {
             var account = await _registerAction.Register(registerAccount);
             return account;
+        }
+
+        public async Task ChangePassword(string userId, ChangePassModel changePasswordModel)
+        {
+             await _registerAction.ChangePassword(userId, changePasswordModel);
         }
     }
 }

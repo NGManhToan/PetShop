@@ -93,5 +93,13 @@ namespace PetShop.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+		[HttpGet("changepassword")]
+		public IActionResult ChangePassword()
+		{
+			return View();
+		}
+
+        
+
     }
 }

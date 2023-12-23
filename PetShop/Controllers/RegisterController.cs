@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PetShop.Models.Login;
 using PetShop.Models.Register;
 using PetShop.Service.Interface;
 
@@ -29,6 +30,14 @@ namespace PetShop.Controllers
                 return View(register);
             }
             return RedirectToAction("Login", "Login", new { returnUrl = "desiredUrlAfterLogin" });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword([FromForm] ChangePassModel changePasswordModel)
+        {
+            var userId = HttpContext.Session.GetString("UserId");
+            await _registerAccountService.ChangePassword(userId, changePasswordModel);
+            return RedirectToAction("Login", "Login");
         }
     }
 }
