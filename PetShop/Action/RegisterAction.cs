@@ -17,6 +17,10 @@ namespace PetShop.Action
 
         public async Task<TblUser> Register(RegisterAccountModel account)
         {
+            if(account == null)
+            {
+
+            }
             var repeat = Encryptor.SHA256Encode(account.RepeatPassword.Trim());
 
             var user = new TblUser

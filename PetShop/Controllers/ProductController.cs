@@ -26,7 +26,7 @@ namespace PetShop.Controllers
 				products = await _productService.ListProduct(pageNumber, pageSize);
 			}
 			var categoryProduct = await _productService.ListCategoryProducts();
-			var totalProducts = products.Count; // Use the count of the filtered or full product list
+			var totalProducts = await _productService.GetTotalProducts();
 
 			var model = new PagedListModel<ListProductModel>
 			{

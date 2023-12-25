@@ -141,11 +141,11 @@
             var password = $("#password").val().trim();
 
             // Check if any field is empty
-            if (!firstname) {
-                $("#firstname-error-message").text("Vui lòng điền tên của bạn.").show();
+            if (!fullname) {
+                $("#fullname-error-message").text("Vui lòng điền tên của bạn.").show();
                 event.preventDefault();
             } else {
-                $("#firstname-error-message").hide();
+                $("#fullname-error-message").hide();
             }
             if (!lastname) {
                 $("#lastname-error-message").text("Vui lòng điền họ của bạn.").show();
