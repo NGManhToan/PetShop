@@ -3,7 +3,21 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <main aria-labelledby="title">
-
+    <!-- Start Banner Area -->
+    <section class="banner-area organic-breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+                <div class="col-first">
+                    <h1>Blog Page</h1>
+                    <nav class="d-flex align-items-center">
+                        <a href="index.html">Home<span class="lnr lnr-arrow-right"></span></a>
+                        <a href="category.html">Blog</a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Banner Area -->
         <!-- Contact Start -->
         <div class="container-fluid pt-5">
             <div class="container">
@@ -13,25 +27,26 @@
                 </div>
                 <div class="row g-5">
                     <div class="col-lg-7">
-                        <form>
-                            <div class="row g-3">
-                                <div class="col-12">
-                                    <input type="text" class="form-control bg-light border-0 px-4" placeholder="Your Name" style="height: 55px;">
-                                </div>
-                                <div class="col-12">
-                                    <input type="email" class="form-control bg-light border-0 px-4" placeholder="Your Email" style="height: 55px;">
-                                </div>
-                                <div class="col-12">
-                                    <input type="text" class="form-control bg-light border-0 px-4" placeholder="Subject" style="height: 55px;">
-                                </div>
-                                <div class="col-12">
-                                    <textarea class="form-control bg-light border-0 px-4 py-3" rows="8" placeholder="Message"></textarea>
-                                </div>
-                                <div class="col-12">
-                                    <button class="btn btn-primary w-100 py-3" type="submit">Send Message</button>
-                                </div>
+                    <form method="post" action="/api/mail/sendmail">
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <input type="text" name="Name" class="form-control bg-light border-0 px-4" placeholder="Your Name" style="height: 55px;">
                             </div>
-                        </form>
+                            <div class="col-12">
+                                <input type="email" name="Email" class="form-control bg-light border-0 px-4" placeholder="Your Email" style="height: 55px;">
+                            </div>
+                            <div class="col-12">
+                                <input type="text" name="Subject" class="form-control bg-light border-0 px-4" placeholder="Subject" style="height: 55px;">
+                            </div>
+                            <div class="col-12">
+                                <textarea name="Message" class="form-control bg-light border-0 px-4 py-3" rows="8" placeholder="Message"></textarea>
+                            </div>
+                            <div class="col-12">
+                                <button class="btn btn-primary w-100 py-3" type="submit">Send Message</button>
+                            </div>
+                        </div>
+                    </form>
+
                     </div>
                     <div class="col-lg-5">
                         <div class="bg-light mb-5 p-5">
@@ -69,3 +84,4 @@
         </div>
         <!-- Contact End -->
 </main>
+<script src="~/js/javascript3.js"></script>

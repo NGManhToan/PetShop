@@ -10,5 +10,6 @@ namespace PetShop.Service.Interface
 
         Task<List<ListProductModel>> FitterListByCategoryProduct(int categoryId, int pageNumber, int pageSize);
         Task<DetailItemModel> DetailItem(int productId);
+
     }
 }

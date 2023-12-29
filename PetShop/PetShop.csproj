@@ -18,6 +18,7 @@
     <PackageReference Include="axios" Version="0.16.2" />
     <PackageReference Include="Dapper" Version="2.1.4" />
     <PackageReference Include="jQuery" Version="3.7.1" />
+    <PackageReference Include="MailKit" Version="4.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.16" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.16" />
     <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />

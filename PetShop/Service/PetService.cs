@@ -27,5 +27,10 @@ namespace PetShop.Service
         {
             return await _petQuery.FitterListByCategoryPet(categoryId, pageNumber, pageSize);
         }
+
+        public async Task<DetailItemPetMModal> DetailItemPet(int petId)
+        {
+            return await _petQuery.DetailItemPet(petId);
+        }
     }
 }

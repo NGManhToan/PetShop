@@ -7,6 +7,7 @@ namespace PetShop.Models.Product
         public List<ListProductModel> Products { get; set; }
         public List<ListCategoryProductModel> Categories { get; set; }
         public PagedListModel<ListProductModel> Pagination { get; set; }
+        public List<ListProductModel>ProductHomePgae { get; set; }
     }
 
 }

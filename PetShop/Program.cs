@@ -9,6 +9,8 @@ using PetShop.Service;
 using PetShop.Service.Interface;
 using PetShop.UtilsService;
 using PetShop.UtilsService.Interface;
+using WebApiTutorialHE.Models.UtilsProject;
+using WebApiTutorialHE.Service;
 using WebApiTutorialHE.Service.Interface;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,6 +28,8 @@ builder.Services.AddScoped<IPetQuery, PetQuery>();
 builder.Services.AddScoped<ICartService, CartService>();
 builder.Services.AddScoped<ICartQuery, CartQuery>();
 builder.Services.AddScoped<ICartAction, CartAction>();
+builder.Services.Configure<MailSettings>(builder.Configuration.GetSection(nameof(MailSettings)));
+builder.Services.AddTransient<IMailService, MailService>();
 // Add services to the container.
 
 

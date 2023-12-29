@@ -8,6 +8,7 @@ namespace PetShop.Query.Interface
         Task<List<PetListCategoryModel>> ListCategoryPet();
 
         Task<List<PetListModel>> FitterListByCategoryPet(int categoryId, int pageNumber, int pageSize);
+        Task<DetailItemPetMModal> DetailItemPet(int petId);
 
     }
 }

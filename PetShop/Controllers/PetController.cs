@@ -60,5 +60,14 @@ namespace PetShop.Controllers
             return View("ListPet", originalModel);
 
         }
+
+        [HttpGet("detail/{petId}")]
+        public async Task<IActionResult> DetailItemPet(int petId)
+        {
+
+            var result = await _petService.DetailItemPet(petId);
+
+            return View("DetailItemPet", result);
+        }
     }
 }

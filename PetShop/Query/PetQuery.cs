@@ -1,4 +1,5 @@
 ﻿using PetShop.Models.Pet;
+using PetShop.Models.Product;
 using PetShop.Query.Interface;
 using PetShop.UtilsService.Interface;
 
@@ -24,8 +25,11 @@ namespace PetShop.Query
                                 join tbl_media m on m.pet_id = pe.pet_id
 							WHERE
 								pe.IsActive = 1 AND pe.IsDeleted = 0
-							ORDER BY pe.pet_name";
-            return await _sharingDapper.QueryAsync<PetListModel>(query);
+							ORDER BY pe.pet_name
+                            LIMIT @PageSize OFFSET @Offset";
+            var parameters = new { PageSize = pageSize, Offset = (pageNumber - 1) * pageSize };
+            var ListPet = await _sharingDapper.QueryAsync<PetListModel>(query, parameters);
+            return ListPet;
         }
 
         public async Task<List<PetListCategoryModel>> ListCategoryPet()
@@ -51,6 +55,30 @@ namespace PetShop.Query
 
             var parameters = new { CategoryId = categoryId, PageSize = pageSize, Offset = (pageNumber - 1) * pageSize };
             return await _sharingDapper.QueryAsync<PetListModel>(query, parameters);
+        }
+
+        public async Task<DetailItemPetMModal> DetailItemPet(int petId)
+        {
+            var query = @"SELECT 
+								pe.pet_id as Id,
+								pe.pet_name AS PetName,
+								pe.pet_price as Price,
+								m.Image_media AS ProductImageUrl,
+								pec.pet_category_name as CategoryName
+							FROM
+								tbl_pet pe
+									JOIN
+								tbl_pet_category pec ON pec.pet_category_id = pe.pet_category_id
+                                    join tbl_media m on m.pet_id = pe.pet_id
+							WHERE
+								pe.IsDeleted = 0 AND pe.IsActive = 1
+									AND pe.pet_id = @petId";
+
+            var detail = await _sharingDapper.QuerySingleAsync<DetailItemPetMModal>(query, new
+            {
+                petId = petId
+            });
+            return detail;
         }
     }
 }

@@ -31,7 +31,7 @@ namespace PetShop.Query
                           p.discount as Discount
                           FROM tbl_product p
 							join tbl_media m on m.product_id = p.product_id
-                          WHERE p.IsActive = 1 AND p.IsDeleted = 0
+                          WHERE p.IsActive = 1 AND p.IsDeleted = 0 
                           ORDER BY p.product_name
                           LIMIT @PageSize OFFSET @Offset";
 
@@ -40,6 +40,8 @@ namespace PetShop.Query
             return ListProduct;
 
         }
+
+        
 
         public async Task<List<ListCategoryProductModel>> ListCategoryProducts()
         {

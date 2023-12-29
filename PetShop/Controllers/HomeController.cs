@@ -34,7 +34,9 @@ namespace PetShop.Controllers
             return View(model);
         }
 
-		public async Task<IActionResult> Search(string searchString)
+        
+
+        public async Task<IActionResult> Search(string searchString)
 		{
 			var productList = await _productService.ListProduct(1, 10); // Assuming an async method
 			ViewData["CurrentFilter"] = searchString;
