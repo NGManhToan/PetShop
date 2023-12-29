@@ -74,7 +74,7 @@ namespace PetShop.Query
 								p.product_name AS ProductName,
 								p.product_description AS DescriptionProduct,
 								p.product_price as Price,
-								m.Image_media AS ProductImageUrl,
+								m.Image_media AS Image,
 								pc.category_name as CategoryName
 							FROM
 								tbl_product p

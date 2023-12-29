@@ -63,7 +63,7 @@ namespace PetShop.Query
 								pe.pet_id as Id,
 								pe.pet_name AS PetName,
 								pe.pet_price as Price,
-								m.Image_media AS ProductImageUrl,
+								m.Image_media AS PetImageUrl,
 								pec.pet_category_name as CategoryName
 							FROM
 								tbl_pet pe
